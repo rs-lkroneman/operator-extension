@@ -62,9 +62,4 @@ chrome.runtime.onInstalled.addListener(function() {
             port.postMessage(memory.commands);
         });
     })
-
-
-    // chrome.tabs.query({active: true, currentWindow: true}, function([tabs]){
-    //     port.sendMessage(tabs.id, {action: "open_dialog_box"}, function(response) {});
-    // });
 });
