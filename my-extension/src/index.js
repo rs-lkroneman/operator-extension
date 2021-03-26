@@ -1,8 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+/* eslint-disable-next-line no-undef */
+const port = chrome.extension.connect({
+    name: "Sample Communication"
+});
 
 ReactDOM.render(
   <React.StrictMode>
@@ -10,6 +15,12 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+
+port.postMessage("Hi BackGround");
+port.onMessage.addListener(function(msg) {
+    console.log("message recieved" + msg);
+});
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
