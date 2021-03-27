@@ -1,9 +1,19 @@
-.ChromeRunner {
-    &__searchInput {
-      min-width: 300px;
-      min-height: 40px;
-      background-color: #888;
-      color: azure;
-    }
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  background: #333;
+
+  &__Select {
+    // &Wrapper {
+    //   margin: -10px;
+    // }
+
+    padding: 10px;
+    background: transparent;
+    color: #f2f2f2;
+    display: block;
   }
-  
+}
