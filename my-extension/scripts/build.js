@@ -1,5 +1,3 @@
-'use strict';
-
 // Ensure environment variables are read.
 require('../config/env');
 
