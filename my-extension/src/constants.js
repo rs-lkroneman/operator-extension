@@ -12,3 +12,10 @@ export const TAB_CLOSE_ALL_UNPINNED = "runner_close_all_unpinned_tabs";
 
 // Extensions Management
 export const EXTENSIONS_MANAGER = "runner_open_extensions";
+
+// Store Actions
+export const COMMANDS_UPDATE = "COMMANDS_UPDATE";
+export const COMMANDS_FILTER = "COMMANDS_FILTER";
+export const COMMANDS_SELECT_UP = "COMMANDS_SELECT_UP";
+export const COMMANDS_SELECT_DOWN = "COMMANDS_SELECT_DOWN";
+export const COMMANDS_EXECUTE = "COMMANDS_EXECUTE";

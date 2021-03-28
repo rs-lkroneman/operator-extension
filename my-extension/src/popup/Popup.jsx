@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import Store from '../store';
+import Store from '../store/store';
 
 // constants
 import {
