@@ -10,7 +10,7 @@ import {
 
 // components
 import SearchInput from "../components/SearchInput";
-import './Popup.scss';
+import SuggestionList from '../components/SuggestionList';
 
 function Popup() {
   const { state, dispatch } = useContext(Store);
@@ -60,10 +60,11 @@ function Popup() {
   console.log('selectedValue');
   console.log(selectedValue);
   return (
-    <div className="App">
+    <div className="Popup">
       <SearchInput type="text" onKeyDown={handleKeyPress} />
-      <div className="App__SelectWrapper">
-        <select className="App__Select" ref={selectRef} value={selectedValue}>
+      <SuggestionList selectedValue={selectedValue} options={filteredCommands} />
+      <div className="Popup__SelectWrapper">
+        <select className="Popup__Select" ref={selectRef} value={selectedValue} onChange={() => {}}>
         {filteredCommands !== null && filteredCommands.map(
           command => <option value={command} key={command}>{command}</option>
         )}

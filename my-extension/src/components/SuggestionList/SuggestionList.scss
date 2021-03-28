@@ -1,0 +1,16 @@
+
+.SuggestionList {
+    color: #fff;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    &__item {
+        padding: 10px 20px;
+
+        &.is-selected {
+            background: white;
+            color: #000;
+        }
+    }
+}
