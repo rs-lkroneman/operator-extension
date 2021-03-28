@@ -1,15 +1,15 @@
 import React, { useContext, useEffect } from 'react';
-import Store from './store';
+import Store from '../store';
 
 // constants
 import {
   KEYCODE_KEYDOWN,
   KEYCODE_KEYUP,
   KEYCODE_ENTER
-} from './constants';
+} from '../constants';
 
 // components
-import SearchInput from "./components/SearchInput";
+import SearchInput from "../components/SearchInput";
 
 import './App.scss';
 
@@ -61,7 +61,7 @@ function App() {
       <div className="App__SelectWrapper">
         <select className="App__Select" ref={selectRef} value={selectedValue}>
         {filteredCommands !== null && filteredCommands.map(
-          command => <option value={command.name}>{command.name}</option>
+          command => <option value={command.name} key={command.name}>{command.name}</option>
         )}
         </select>
       </div>
