@@ -2,14 +2,18 @@ import {
   forEachTab,
   updateTab,
   removeTab,
-  navigateTo
+  navigateTo,
+  moveCurrentTabToNewWindow,
+  consolidateTabsFromWindows
 } from "./helpers";
 import {
   TAB_TOGGLE_PIN_UNPIN,
   TAB_UNPIN_ALL,
   TAB_PIN_ALL,
   TAB_CLOSE_ALL_UNPINNED,
+  TAB_MOVE_TO_NEW_WINDOW,
   EXTENSIONS_MANAGER,
+  TAB_CONSOLIDATE_FROM_WINDOWS
 } from "../constants";
 
 const handlers = {
@@ -42,6 +46,12 @@ const handlers = {
   [EXTENSIONS_MANAGER]() {
     navigateTo("chrome://extensions/")
   },
+  [TAB_MOVE_TO_NEW_WINDOW]() {
+    moveCurrentTabToNewWindow();
+  },
+  [TAB_CONSOLIDATE_FROM_WINDOWS]() {
+    consolidateTabsFromWindows();
+  }
 };
 
 export const commandNames = Object.keys(handlers);
