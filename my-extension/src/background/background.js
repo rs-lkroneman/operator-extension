@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import commandHandlers from './commands';
+import commandHandlers, { commandNames } from './commands';
 
 const memory = {};
 const runCommand = (command) => {
@@ -10,7 +10,7 @@ const runCommand = (command) => {
 
 chrome.runtime.onInstalled.addListener(() => {
     chrome.commands.getAll(result => {
-        memory.commands = [...result];
+        memory.commands = [...commandNames];
     });
     chrome.commands.onCommand.addListener(runCommand);
     chrome.extension.onConnect.addListener((port) => {

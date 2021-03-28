@@ -31,8 +31,8 @@ function filterCommands(commands, searchTerm = '') {
     }
 
     return commands.filter(command => 
-        command.name.includes(searchTerm)
-    );
+        command.includes(searchTerm)
+    );  
 }
 
 export const StateProvider = ({ children }) =>  {
@@ -93,7 +93,7 @@ export const StateProvider = ({ children }) =>  {
                     return state;
                 }
 
-                const { name: commandToExecute } = state.filteredCommands[selectedCommand];
+                const commandToExecute = state.filteredCommands[selectedCommand];
                 console.log('commandToExecute');
                 console.log(commandToExecute);
                 if(commandToExecute) {

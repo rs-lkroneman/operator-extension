@@ -9,3 +9,6 @@ export const TAB_TOGGLE_PIN_UNPIN = "runner_pin_unpin_tab";
 export const TAB_UNPIN_ALL = "runner_unpin_all_tabs";
 export const TAB_PIN_ALL = "runner_pin_all_tabs";
 export const TAB_CLOSE_ALL_UNPINNED = "runner_close_all_unpinned_tabs";
+
+// Extensions Management
+export const EXTENSIONS_MANAGER = "runner_open_extensions";

@@ -54,14 +54,14 @@ function Popup() {
     console.log(selectRef.current.value);
   }, [state.searchTerm, selectRef])
 
-  const { name: selectedValue } = filteredCommands[selectedCommand] || {};
+  const selectedValue = filteredCommands[selectedCommand] || {};
   return (
     <div className="App">
       <SearchInput type="text" onKeyDown={handleKeyPress} />
       <div className="App__SelectWrapper">
-        <select className="App__Select" ref={selectRef} value={selectedValue}>
+        <select className="App__Select" ref={selectRef} value={selectedValue} readOnly>
         {filteredCommands !== null && filteredCommands.map(
-          command => <option value={command.name} key={command.name}>{command.name}</option>
+          command => <option value={command} key={command}>{command}</option>
         )}
         </select>
       </div>
