@@ -11,16 +11,15 @@ const store = createContext(initialState);
 const { Provider } = store;
 
 function selectCommand(commands, atIndex = 0) {
-    console.log('SELECT_COMMAND_FUNCTION');
-    console.log('commands, atIndex = 0');
-    console.log(commands, atIndex = 0)
     if(commands.length === 0) {
         return null;
     }
 
-    const resultingIndex = Math.max(Math.min(atIndex, commands.length - 1), 0);
-    console.log('selectCommand: resultingIndex');
-    console.log(resultingIndex);
+    const resultingIndex = Math.max(
+        Math.min(
+            atIndex, commands.length - 1
+        ),
+    0);
     return resultingIndex;
 }
 
@@ -65,30 +64,26 @@ export const StateProvider = ({ children }) =>  {
             case "COMMANDS_SELECT_UP":
                 console.log('COMMANDS_SELECT_UP');
                 console.log(selectedCommand && selectedCommand - 1)
+                const atIndexUp = selectedCommand !== null && selectedCommand - 1;
                 return {
                     ...state,
                     selectedCommand: selectCommand(
                         state.filteredCommands,
-                        selectedCommand && selectedCommand - 1
+                        atIndexUp
                     )
                 };
             case "COMMANDS_SELECT_DOWN":
                 console.log('COMMANDS_SELECT_DOWN');
+                const atIndexDown = selectedCommand !== null && selectedCommand + 1;
                 return {
                     ...state,
                     selectedCommand: selectCommand(
                         state.filteredCommands,
-                        selectedCommand !== null && selectedCommand + 1
+                        atIndexDown
                     )
                 };
             case "COMMANDS_EXECUTE":
                 console.log('COMMANDS_EXECUTE');
-                console.log('state');
-                console.log(state);
-                console.log('action');
-                console.log(action);
-                console.log('selectedCommand');
-                console.log(selectedCommand);
                 if(selectedCommand == null) {
                     return state;
                 }

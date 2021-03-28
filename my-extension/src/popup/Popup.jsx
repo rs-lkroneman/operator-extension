@@ -10,7 +10,6 @@ import {
 
 // components
 import SearchInput from "../components/SearchInput";
-
 import './Popup.scss';
 
 function Popup() {
@@ -46,7 +45,10 @@ function Popup() {
 
     const searchInput = e.currentTarget;
     const searchValue = searchInput.value;
-    dispatch({ type: "COMMANDS_FILTER", payload: searchValue.trim() });
+    dispatch({
+      type: "COMMANDS_FILTER",
+      payload: searchValue.trim()
+    });
   };
 
   useEffect(() => {
@@ -54,12 +56,14 @@ function Popup() {
     console.log(selectRef.current.value);
   }, [state.searchTerm, selectRef])
 
-  const selectedValue = filteredCommands[selectedCommand] || {};
+  const selectedValue = filteredCommands[selectedCommand] || '';
+  console.log('selectedValue');
+  console.log(selectedValue);
   return (
     <div className="App">
       <SearchInput type="text" onKeyDown={handleKeyPress} />
       <div className="App__SelectWrapper">
-        <select className="App__Select" ref={selectRef} value={selectedValue} readOnly>
+        <select className="App__Select" ref={selectRef} value={selectedValue}>
         {filteredCommands !== null && filteredCommands.map(
           command => <option value={command} key={command}>{command}</option>
         )}
