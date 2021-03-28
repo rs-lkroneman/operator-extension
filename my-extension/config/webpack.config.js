@@ -60,8 +60,7 @@ module.exports = function (webpackEnv) {
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
     const loaders = [
-      isEnvDevelopment && require.resolve('style-loader'),
-      isEnvProduction && {
+      {
         loader: MiniCssExtractPlugin.loader,
         options: paths.publicUrlOrPath.startsWith('.')
           ? { publicPath: '../../' }
@@ -85,7 +84,7 @@ module.exports = function (webpackEnv) {
             }),
             postcssNormalize(),
           ],
-          sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+          sourceMap: true,
         },
       },
     ].filter(Boolean);
@@ -178,12 +177,9 @@ module.exports = function (webpackEnv) {
         '.web.js',
         '.js',
         '.web.ts',
-        '.ts',
-        '.web.tsx',
-        '.tsx',
         '.json',
         '.web.jsx',
-        '.jsx',
+        '.jsx'
       ],
       alias: {
         'react-native': 'react-native-web',
@@ -373,11 +369,10 @@ module.exports = function (webpackEnv) {
       isEnvDevelopment && new CaseSensitivePathsPlugin(),
       isEnvDevelopment &&
         new WatchMissingNodeModulesPlugin(paths.appNodeModules),
-      isEnvProduction &&
-        new MiniCssExtractPlugin({
-          filename: 'static/css/[name].[contenthash:8].css',
-          chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
-        }),
+      new MiniCssExtractPlugin({
+        filename: '[name].css',
+        chunkFilename: '[name].css',
+      }),
     ].filter(Boolean),
     node: {
       module: 'empty',

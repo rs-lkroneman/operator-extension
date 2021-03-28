@@ -11,9 +11,9 @@ import {
 // components
 import SearchInput from "../components/SearchInput";
 
-import './App.scss';
+import './Popup.scss';
 
-function App() {
+function Popup() {
   const { state, dispatch } = useContext(Store);
   const { filteredCommands, selectedCommand } = state;
   const selectRef = React.createRef();
@@ -69,4 +69,4 @@ function App() {
   );
 }
 
-export default App;
+export default Popup;
