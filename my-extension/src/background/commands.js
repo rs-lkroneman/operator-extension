@@ -4,7 +4,8 @@ import {
   removeTab,
   navigateTo,
   moveCurrentTabToNewWindow,
-  consolidateTabsFromWindows
+  consolidateTabsFromWindows,
+  tabMovement
 } from "./helpers";
 import {
   TAB_TOGGLE_PIN_UNPIN,
@@ -15,6 +16,8 @@ import {
   TAB_CONSOLIDATE_FROM_WINDOWS,
   TAB_LEFT,
   TAB_RIGHT,
+  TAB_MOVE_TO_FRONT,
+  TAB_MOVE_TO_END,
   EXTENSIONS_MANAGER,
 } from "../constants";
 
@@ -55,10 +58,16 @@ const handlers = {
     consolidateTabsFromWindows();
   },
   [TAB_LEFT]() {
-
+    tabMovement(TAB_LEFT);
   },
   [TAB_RIGHT]() {
-    
+    tabMovement(TAB_RIGHT);
+  },
+  [TAB_MOVE_TO_FRONT]() {
+    tabMovement(TAB_MOVE_TO_FRONT);
+  },
+  [TAB_MOVE_TO_END]() {
+    tabMovement(TAB_MOVE_TO_END);
   }
 };
 
