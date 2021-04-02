@@ -81,7 +81,7 @@ export default function useCommandReducer() {
         console.log("commandToExecute");
         console.log(commandToExecute);
         if (commandToExecute) {
-          backgroundClient.postMessage(commandToExecute);
+          backgroundClient.sendMessage(commandToExecute);
         }
         return state;
       default:

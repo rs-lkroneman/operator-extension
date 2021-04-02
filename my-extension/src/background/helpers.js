@@ -16,7 +16,7 @@ const chromeTabs = {
     async getCurrent() {
         const [result] = await this.query({ currentWindow: true, active: true })
         return result;
-    }
+    },
 }
 
 export function forEachTab(fn) {
@@ -72,7 +72,12 @@ export async function consolidateTabsFromWindows() {
     const filteredWindows = allWindows.filter(filerOutCurrent);
     const tabsFromOtherWindows = await Promise.all(filteredWindows.map(win => chromeTabs.query({ windowId: win.id })));
     const flattenedTabs = tabsFromOtherWindows.filter(Boolean).reduce((result, current) => [...result, ...current], []);
-    const flattenedTabsIds = flattenedTabs.map(tab => tab.id);
+    const isNotEmpty = item => !Boolean(item) || item === null || item.length < 1;
+    const flattenedTabsIds = flattenedTabs.map(tab => tab.id).filter(isNotEmpty);
+
+    if(flattenedTabs.length < 1) {
+        return;
+    }
 
     await chromeTabs.move(flattenedTabsIds, {
         windowId: currentWindow.id,

@@ -18,7 +18,7 @@ const { Provider } = store;
 export const StateProvider = ({ children }) =>  {
     const [state, dispatch] = useCommandReducer();
 
-    backgroundClient.onMessage.addListener((payload) => {
+    backgroundClient.addListener((payload) => {
         console.log('receiving message from background');
         dispatch({type: COMMANDS_UPDATE, payload });
     })

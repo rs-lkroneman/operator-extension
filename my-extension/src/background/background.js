@@ -12,10 +12,11 @@ chrome.runtime.onInstalled.addListener(() => {
     chrome.commands.getAll(result => {
         memory.commands = [...commandNames];
     });
-    chrome.commands.onCommand.addListener(runCommand);
-    chrome.extension.onConnect.addListener((port) => {
-        console.log("Connected .....");
-        port.postMessage(memory.commands);
-        port.onMessage.addListener(runCommand);
-    })
+});
+
+chrome.commands.onCommand.addListener(runCommand);
+chrome.extension.onConnect.addListener((port) => {
+    console.log("Connected .....");
+    port.postMessage(memory.commands);
+    port.onMessage.addListener(runCommand);
 });

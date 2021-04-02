@@ -12,8 +12,10 @@ import {
   TAB_PIN_ALL,
   TAB_CLOSE_ALL_UNPINNED,
   TAB_MOVE_TO_NEW_WINDOW,
+  TAB_CONSOLIDATE_FROM_WINDOWS,
+  TAB_LEFT,
+  TAB_RIGHT,
   EXTENSIONS_MANAGER,
-  TAB_CONSOLIDATE_FROM_WINDOWS
 } from "../constants";
 
 const handlers = {
@@ -51,6 +53,12 @@ const handlers = {
   },
   [TAB_CONSOLIDATE_FROM_WINDOWS]() {
     consolidateTabsFromWindows();
+  },
+  [TAB_LEFT]() {
+
+  },
+  [TAB_RIGHT]() {
+    
   }
 };
 
