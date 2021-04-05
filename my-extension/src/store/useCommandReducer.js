@@ -40,6 +40,10 @@ export default function useCommandReducer() {
     switch (action.type) {
       case COMMANDS_UPDATE:
         console.log(COMMANDS_UPDATE);
+        if(!action.payload) {
+          return state;
+        }
+
         return {
           ...state,
           commands: [...action.payload],
