@@ -83,8 +83,7 @@ export async function consolidateTabsFromWindows() {
   const flattenedTabs = tabsFromOtherWindows
     .filter(Boolean)
     .reduce((result, current) => [...result, ...current], []);
-  const isNotEmpty = (item) =>
-    !Boolean(item) || item === null || item.length < 1;
+  const isNotEmpty = (item) => Boolean(item) || item !== null;
   const flattenedTabsIds = flattenedTabs
     .map((tab) => tab.id)
     .filter(isNotEmpty);
