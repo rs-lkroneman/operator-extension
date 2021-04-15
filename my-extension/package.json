@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "webpack -w --config ./config/webpack.config.js",
     "build": "webpack --config ./config/webpack.config.js",
     "watch": "webpack -w --config ./config/webpack.config.js"
   },
