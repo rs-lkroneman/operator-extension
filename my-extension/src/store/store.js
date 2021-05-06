@@ -15,13 +15,13 @@ const initialState = {
 const store = createContext(initialState);
 const { Provider } = store;
 
-export const StateProvider = ({ children }) =>  {
+export const StateProvider = ({ children }) => {
     const [state, dispatch] = useCommandReducer();
 
     backgroundClient.addListener((payload) => {
         console.log('receiving message from background');
         dispatch({type: COMMANDS_UPDATE, payload });
-    })
+    });
 
     return (
         <Provider value={{ state, dispatch }}>

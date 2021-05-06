@@ -30,7 +30,7 @@ function filterCommands(commands, searchTerm = "") {
     return commands;
   }
 
-  return commands.filter((command) => command.includes(searchTerm));
+  return commands.filter((command) => command.toLowerCase().includes(searchTerm.toLowerCase()));
 }
 
 export default function useCommandReducer() {

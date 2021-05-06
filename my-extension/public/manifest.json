@@ -22,19 +22,19 @@
         "mac": "MacCtrl+Space"
       }
     },
-    "runner_pin_unpin_tab": {
+    "pin_unpin_tab": {
       "description": "Pin or unpin the current tab.",
       "suggested_key": {
         "default": "Ctrl+Shift+X"
       }
     },
-    "runner_pin_all_tabs": {
+    "pin_all_tabs": {
       "description": "Pin all tabs in the current window."
     },
-    "runner_unpin_all_tabs": {
+    "unpin_all_tabs": {
       "description": "Unpin all pinned tabs in the current window."
     },
-    "runner_close_all_unpinned_tabs": {
+    "close_all_unpinned_tabs": {
       "description": "Pin or unpin the current tab."
     }
   },
