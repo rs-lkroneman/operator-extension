@@ -172,6 +172,8 @@ module.exports = function (webpackEnv) {
     resolve: {
       modules: ['node_modules', paths.appNodeModules],
       extensions: [
+        ".ts",
+        ".tsx",
         '.web.mjs',
         '.mjs',
         '.web.js',
@@ -179,7 +181,7 @@ module.exports = function (webpackEnv) {
         '.web.ts',
         '.json',
         '.web.jsx',
-        '.jsx'
+        '.jsx',
       ],
       alias: {
         'react-native': 'react-native-web',

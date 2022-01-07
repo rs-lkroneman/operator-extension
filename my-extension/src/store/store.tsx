@@ -12,10 +12,14 @@ const initialState = {
     commands: [],
     filteredCommands: []
 };
+
 const store = createContext(initialState);
 const { Provider } = store;
 
-export const StateProvider = ({ children }) => {
+type StateProviderProps = {} & React.ComponentProps<'div'>;
+
+export const StateProvider = (props: StateProviderProps) => {
+    const { children } = props;
     const [state, dispatch] = useCommandReducer();
 
     backgroundClient.addListener((payload) => {
