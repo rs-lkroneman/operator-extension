@@ -16,7 +16,6 @@ const CopyPlugin = require("copy-webpack-plugin");
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 const postcssNormalize = require('postcss-normalize');
-const appPackageJson = require(paths.appPackageJson);
 const shouldUseSourceMap = true;
 
 const imageInlineSizeLimit = parseInt(
@@ -121,9 +120,7 @@ module.exports = function (webpackEnv) {
       path: paths.appBuild,
       pathinfo: isEnvDevelopment,
       filename: '[name].js',
-      futureEmitAssets: true,
       publicPath: paths.publicUrlOrPath,
-      jsonpFunction: `webpackJsonp${appPackageJson.name}`,
       globalObject: 'this',
     },
     optimization: {
@@ -241,7 +238,7 @@ module.exports = function (webpackEnv) {
                     },
                   ],
                 ],
-                
+
                 plugins: [
                   [
                     require.resolve('babel-plugin-named-asset-import'),
@@ -279,7 +276,7 @@ module.exports = function (webpackEnv) {
                 ],
                 cacheDirectory: true,
                 cacheCompression: false,
-                
+
                 sourceMaps: shouldUseSourceMap,
                 inputSourceMap: shouldUseSourceMap,
               },
@@ -376,16 +373,6 @@ module.exports = function (webpackEnv) {
         chunkFilename: '[name].css',
       }),
     ].filter(Boolean),
-    node: {
-      module: 'empty',
-      dgram: 'empty',
-      dns: 'mock',
-      fs: 'empty',
-      http2: 'empty',
-      net: 'empty',
-      tls: 'empty',
-      child_process: 'empty',
-    },
     performance: false,
   };
 };

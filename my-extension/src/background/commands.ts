@@ -51,23 +51,23 @@ const handlers = {
   [EXTENSIONS_MANAGER]() {
     navigateTo("chrome://extensions/")
   },
-  [TAB_MOVE_TO_NEW_WINDOW]() {
-    moveCurrentTabToNewWindow();
+  async [TAB_MOVE_TO_NEW_WINDOW]() {
+    await moveCurrentTabToNewWindow();
   },
-  [TAB_CONSOLIDATE_FROM_WINDOWS]() {
-    consolidateTabsFromWindows();
+  async [TAB_CONSOLIDATE_FROM_WINDOWS]() {
+    await consolidateTabsFromWindows();
   },
-  [TAB_LEFT]() {
-    tabMovement(TAB_LEFT);
+  async [TAB_LEFT]() {
+    await tabMovement(TAB_LEFT);
   },
-  [TAB_RIGHT]() {
-    tabMovement(TAB_RIGHT);
+  async [TAB_RIGHT]() {
+    await tabMovement(TAB_RIGHT);
   },
-  [TAB_MOVE_TO_FRONT]() {
-    tabMovement(TAB_MOVE_TO_FRONT);
+  async [TAB_MOVE_TO_FRONT]() {
+    await tabMovement(TAB_MOVE_TO_FRONT);
   },
-  [TAB_MOVE_TO_END]() {
-    tabMovement(TAB_MOVE_TO_END);
+  async [TAB_MOVE_TO_END]() {
+    await tabMovement(TAB_MOVE_TO_END);
   }
 };
 

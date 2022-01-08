@@ -16,8 +16,9 @@ const chromeTabs = {
     return toPromise<chrome.tabs.Tab>(chrome.tabs.move, tabId, moveProperties)
   },
 
-  update(id, config) {
-    return chrome.tabs.update(id, config);
+  update(...args) {
+    // @ts-ignore
+    return chrome.tabs.update(...args);
   },
 
   async getCurrent() {

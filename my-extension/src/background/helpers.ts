@@ -23,7 +23,7 @@ export function removeTab(id) {
 }
 
 export function navigateTo(url) {
-  chrome.tabs.update({ url });
+  chromeTabs.update({ url });
 }
 
 export async function moveCurrentTabToNewWindow() {
