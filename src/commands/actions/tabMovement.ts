@@ -76,7 +76,7 @@ const movements: Movements = {
   [TAB_MOVE_TO_END]: moveTabsToEnd,
 };
 
-export default async function tabMovement(direction: TabDirection) {
+async function moveTab(direction: TabDirection) {
   const moveTabs = movements[direction];
 
   const baseConfig = { currentWindow: true };
@@ -110,3 +110,17 @@ export default async function tabMovement(direction: TabDirection) {
     });
   }
 }
+
+export const tabLeft = () => moveTab(TAB_LEFT);
+export const tabRight = () => moveTab(TAB_RIGHT);
+export const tabStart = () => moveTab(TAB_MOVE_TO_FRONT);
+export const tabEnd = () => moveTab(TAB_MOVE_TO_END);
+
+const tabMovement = {
+  tabLeft,
+  tabRight,
+  tabStart,
+  tabEnd,
+};
+
+export default tabMovement;

@@ -26,7 +26,7 @@ describe("TabMovement", () => {
           createMockQueryImplementationWith(DEFAULT_TABS)
         );
 
-        await tabMovement("move_tab_left");
+        await tabMovement.tabLeft();
         expect(chromeTabs.move).toHaveBeenCalledWith(9, { index: 0 });
       });
 
@@ -41,7 +41,7 @@ describe("TabMovement", () => {
           createMockQueryImplementationWith(TAB_STATE)
         );
 
-        await tabMovement("move_tab_left");
+        await tabMovement.tabLeft();
         expect(chromeTabs.move).toHaveBeenCalledWith(9, { index: 2 });
       });
     });
@@ -54,7 +54,7 @@ describe("TabMovement", () => {
           createMockQueryImplementationWith(DEFAULT_TABS)
         );
 
-        await tabMovement("move_tab_right");
+        await tabMovement.tabRight();
         expect(chromeTabs.move).toHaveBeenCalledWith(9, { index: 2 });
       });
 
@@ -69,7 +69,7 @@ describe("TabMovement", () => {
           createMockQueryImplementationWith(TAB_STATE)
         );
 
-        await tabMovement("move_tab_right");
+        await tabMovement.tabRight();
         expect(chromeTabs.move).toHaveBeenCalledWith(9, { index: 0 });
       });
     });
@@ -87,7 +87,7 @@ describe("TabMovement", () => {
         createMockQueryImplementationWith(TAB_STATE)
       );
 
-      await tabMovement("move_tab_to_front");
+      await tabMovement.tabStart();
       expect(chromeTabs.move).toHaveBeenCalledWith(9, { index: 0 });
     });
 
@@ -102,7 +102,7 @@ describe("TabMovement", () => {
         createMockQueryImplementationWith(TAB_STATE)
       );
 
-      await tabMovement("move_tab_to_front");
+      await tabMovement.tabStart();
       expect(chromeTabs.move).toHaveBeenCalledWith(9, { index: 0 });
     });
   });
@@ -119,7 +119,7 @@ describe("TabMovement", () => {
         createMockQueryImplementationWith(TAB_STATE)
       );
 
-      await tabMovement("move_tab_to_end");
+      await tabMovement.tabEnd();
       expect(chromeTabs.move).toHaveBeenCalledWith(9, { index: 2 });
     });
 
@@ -134,7 +134,7 @@ describe("TabMovement", () => {
         createMockQueryImplementationWith(TAB_STATE)
       );
 
-      await tabMovement("move_tab_to_end");
+      await tabMovement.tabEnd();
       expect(chromeTabs.move).toHaveBeenCalledWith(9, { index: 2 });
     });
   });
