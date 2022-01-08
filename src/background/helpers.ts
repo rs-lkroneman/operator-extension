@@ -8,22 +8,21 @@ import {
 import chromeWindow from '../api/windows';
 import chromeTabs from "../api/tabs";
 
-export function forEachTab(fn) {
-  chrome.windows.getCurrent({ populate: true }, (curWindow) => {
-    curWindow.tabs.forEach(fn);
-  });
+export async function forEachTab(fn) {
+  const currentWindow = await chromeWindow.getCurrent({ populate: true });
+  currentWindow.tabs.forEach(fn);
 }
 
 export function updateTab(id, config) {
-  chrome.tabs.update(id, config);
+  return chromeTabs.update(id, config);
 }
 
 export function removeTab(id) {
-  chrome.tabs.remove(id);
+  return chromeTabs.remove(id);
 }
 
 export function navigateTo(url) {
-  chromeTabs.update({ url });
+  return chromeTabs.update({ url });
 }
 
 export async function moveCurrentTabToNewWindow() {
@@ -45,7 +44,7 @@ export async function moveCurrentTabToNewWindow() {
 
   const movedTabIndex = tabsToClose.length - 1;
   tabsToClose.forEach((tab, index) => {
-    chrome.tabs.remove(tab.id);
+    chromeTabs.remove(tab.id);
     if (movedTabIndex === index) {
       chromeWindow.update(newWindowId, {
         focused: true,
@@ -106,7 +105,7 @@ export async function tabMovement(direction) {
       // if wrapping around, we need to move only one tab,
       // even if more than one is selected
       if (isFirstInRange) {
-        chrome.tabs.move(firstTab.id, { index: rightBoundary });
+        chromeTabs.move(firstTab.id, { index: rightBoundary });
         return;
       }
 
@@ -117,7 +116,7 @@ export async function tabMovement(direction) {
       // if wrapping around, we need to move only one tab,
       // even if more than one is selected
       if (isLastInRange) {
-        chrome.tabs.move(tabs[tabs.length - 1].id, { index: leftBoundary });
+        chromeTabs.move(tabs[tabs.length - 1].id, { index: leftBoundary });
         return;
       }
 
@@ -131,17 +130,20 @@ export async function tabMovement(direction) {
     }
 
     for (let i = 0; i < newPositions.length; i++) {
-      chrome.tabs.move(tabs[i].id, { index: newPositions[i] });
+      chromeTabs.move(tabs[i].id, { index: newPositions[i] });
     }
   }
 
-  chrome.tabs.query(baseConfig, countAll);
-  chrome.tabs.query({ ...baseConfig, pinned: true }, countPinned);
-  chrome.tabs.query(
+  const allTabs = await chromeTabs.query(baseConfig, countAll);
+  countAll(allTabs);
+  const pinnedTabs = await chromeTabs.query({ ...baseConfig, pinned: true });
+  countPinned(pinnedTabs);
+
+  await chromeTabs.query(
     { ...baseConfig, highlighted: true, pinned: true },
     movePinnedTabs
   );
-  chrome.tabs.query(
+  await chromeTabs.query(
     { ...baseConfig, highlighted: true, pinned: false },
     moveUnpinnedTabs
   );

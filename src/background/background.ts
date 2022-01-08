@@ -2,7 +2,7 @@ import runtime from "../api/runtime";
 import extension from "../api/extension";
 import commands from "../api/commands";
 
-import commandHandlers, { commandNames } from './commands';
+import commandHandlers, { commandNames } from '../commands';
 
 type Memory = {
     commands: string[]

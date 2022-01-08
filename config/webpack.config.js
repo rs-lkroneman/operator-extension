@@ -16,6 +16,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 const postcssNormalize = require('postcss-normalize');
+const path = require("path");
 const shouldUseSourceMap = true;
 
 const imageInlineSizeLimit = parseInt(
@@ -181,6 +182,7 @@ module.exports = function (webpackEnv) {
         '.jsx',
       ],
       alias: {
+        'src': path.join(__dirname, '../src'),
         'react-native': 'react-native-web',
         ...(isEnvProductionProfile && {
           'react-dom$': 'react-dom/profiling',

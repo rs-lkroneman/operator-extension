@@ -1,10 +1,12 @@
-import { callbackToPromise } from "./util";
+// Facade around Chrome API => windows
+// https://developer.chrome.com/docs/extensions/reference/windows/
 
+import { callbackToPromise } from "./util";
 type ChromeWindow = {} & chrome.windows.Window;
 
 const windows = {
-  getCurrent() {
-    return callbackToPromise<ChromeWindow>(chrome.windows.getCurrent);
+  getCurrent(...args) {
+    return callbackToPromise<ChromeWindow>(chrome.windows.getCurrent, ...args);
   },
 
   get(...args) {

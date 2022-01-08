@@ -6,7 +6,7 @@ import {
   moveCurrentTabToNewWindow,
   consolidateTabsFromWindows,
   tabMovement
-} from "./helpers";
+} from "../background/helpers";
 import {
   TAB_TOGGLE_PIN_UNPIN,
   TAB_UNPIN_ALL,
