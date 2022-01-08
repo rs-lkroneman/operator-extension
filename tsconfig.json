@@ -15,5 +15,6 @@
     "sourceMap": true,
     "sourceRoot": "./",
     "strictNullChecks": true,
+    "jsx": "react"
   },
 }
