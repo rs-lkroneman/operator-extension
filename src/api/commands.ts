@@ -1,6 +1,5 @@
 // Facade around Chrome API => commands
 // https://developer.chrome.com/docs/extensions/reference/commands/
-// eslint-disable-next-line @typescript-eslint/no-use-before-define
 type Tab = chrome.tabs.Tab;
 
 const commands = {

@@ -1,9 +1,11 @@
+// Facade around Chrome API => tabs
+// https://developer.chrome.com/docs/extensions/reference/tabs/
 import {toPromise} from "./util";
 
 const chromeTabs = {
-  query(queryInfo: chrome.tabs.QueryInfo): Promise<chrome.tabs.Tab[]> {
+  query(...args): Promise<chrome.tabs.Tab[]> {
     // @ts-ignore
-    return toPromise<chrome.tabs.Tab[]>(chrome.tabs.query, queryInfo)
+    return toPromise<chrome.tabs.Tab[]>(chrome.tabs.query, ...args);
   },
 
   moveTabs(tabIds: number[], moveProperties: chrome.tabs.MoveProperties) {
@@ -16,13 +18,18 @@ const chromeTabs = {
     return toPromise<chrome.tabs.Tab>(chrome.tabs.move, tabId, moveProperties)
   },
 
+  remove(...args) {
+    // @ts-ignore
+    return chrome.tabs.remove(...args);
+  },
+
   update(...args) {
     // @ts-ignore
     return chrome.tabs.update(...args);
   },
 
   async getCurrent() {
-    const [result] = await this.query({ currentWindow: true, active: true });
+    const [result] = await this.query({currentWindow: true, active: true});
     return result;
   }
 }

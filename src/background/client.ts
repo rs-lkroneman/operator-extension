@@ -1,13 +1,6 @@
+import extension, { Connection } from "../api/extension";
 /* eslint-disable no-undef */
-type Connection = {
-  onDisconnect: {
-    addListener: (callback: Function) => void
-  },
-  onMessage: {
-    addListener: (callback: Function) => void
-  },
-  postMessage: any
-}
+
 
 class ConnectionClient {
   private static connection: Connection = null;
@@ -15,7 +8,7 @@ class ConnectionClient {
 
   static connect() {
     // @ts-ignore
-    ConnectionClient.connection = chrome.extension.connect({
+    ConnectionClient.connection = extension.connect({
       name: 'ConnectionClient.name',
     });
 

@@ -1,6 +1,5 @@
-// Facade around chrome runtime
+// Facade around Chrome API => runtime
 // https://developer.chrome.com/docs/extensions/reference/runtime/
-// eslint-disable-next-line @typescript-eslint/no-use-before-define
 type InstalledDetails = chrome.runtime.InstalledDetails;
 
 const runtime = {
