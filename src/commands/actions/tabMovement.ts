@@ -1,70 +1,104 @@
 import {
   TAB_LEFT,
-  TAB_MOVE_TO_END,
+  TAB_RIGHT,
   TAB_MOVE_TO_FRONT,
-  TAB_RIGHT
+  TAB_MOVE_TO_END,
 } from "src/constants";
 
-import {createRange} from 'src/utils';
+import { createRange } from "src/utils";
 import chromeTabs from "src/api/tabs";
 
-export default async function tabMovement(direction) {
-  const baseConfig = {currentWindow: true};
-  const tabCount = {all: 0, pinned: 0};
-  const countAll = tabs => (tabCount.all = tabs.length);
-  const countPinned = tabs => (tabCount.pinned = tabs.length);
-  const movePinnedTabs = tabs => moveTabs(tabs, 0, tabCount.pinned - 1);
-  const moveUnpinnedTabs = tabs =>
-    moveTabs(tabs, tabCount.pinned, tabCount.all - 1);
+export type TabDirection =
+  | "move_tab_left"
+  | "move_tab_right"
+  | "move_tab_to_end"
+  | "move_tab_to_front";
 
-  function moveTabs(tabs, leftBoundary, rightBoundary) {
-    let newPositions = [];
-    if (TAB_LEFT === direction) {
-      const [firstTab] = tabs;
-      const isFirstInRange = firstTab && firstTab.index === leftBoundary;
-      // if wrapping around, we need to move only one tab,
-      // even if more than one is selected
-      if (isFirstInRange) {
-        chromeTabs.move(firstTab.id, {index: rightBoundary});
-        return;
-      }
+export type Boundaries = {
+  left: number;
+  right: number;
+};
 
-      newPositions = tabs.map(tab => tab.index - 1);
-    } else if (TAB_RIGHT === direction) {
-      const isLastInRange = tabs[tabs.length - 1] &&
-        tabs[tabs.length - 1].index === rightBoundary;
-      // if wrapping around, we need to move only one tab,
-      // even if more than one is selected
-      if (isLastInRange) {
-        chromeTabs.move(tabs[tabs.length - 1].id, {index: leftBoundary});
-        return;
-      }
+export type Movements = {
+  [index in TabDirection]: (id: any[], boundaries: Boundaries) => void;
+};
 
-      tabs.reverse(); // when moving right, process tabs from right to left
-      newPositions = tabs.map((tab) => tab.index + 1);
-    } else if (TAB_MOVE_TO_FRONT === direction) {
-      newPositions = createRange(leftBoundary, 1, tabs.length);
-    } else if (TAB_MOVE_TO_END === direction) {
-      tabs.reverse(); // when moving right, process tabs from right to left
-      newPositions = createRange(rightBoundary, -1, tabs.length);
+const movements: Movements = {
+  [TAB_LEFT](tabs, { left, right }) {
+    const [firstTab] = tabs;
+    const isFirstInRange = firstTab && firstTab.index === left;
+
+    // if wrapping around, we need to move only one tab,
+    // even if more than one is selected
+    if (isFirstInRange) {
+      chromeTabs.move(firstTab.id, { index: right });
+      return;
     }
 
+    // If not wrapping around move all selected tabs to the left
+    tabs.map((tab) => chromeTabs.move(tab.id, { index: tab.index - 1 }));
+  },
+  [TAB_RIGHT](tabs, { left, right }) {
+    const lastTab = tabs[tabs.length - 1];
+    const isLastInRange = lastTab && lastTab.index === right;
+
+    // if wrapping around, we need to move only one tab,
+    // even if more than one is selected
+    if (isLastInRange) {
+      chromeTabs.move(lastTab.id, { index: left });
+      return;
+    }
+
+    // If not wrapping around move all selected tabs to the right by incrementing their index
+    tabs.reverse(); // when moving right, process tabs from right to left
+    tabs.map((tab) => chromeTabs.move(tab.id, { index: tab.index + 1 }));
+  },
+  [TAB_MOVE_TO_FRONT](tabs, { left, right }) {
+    const newPositions = createRange(left, 1, tabs.length);
     for (let i = 0; i < newPositions.length; i++) {
-      chromeTabs.move(tabs[i].id, {index: newPositions[i]});
+      chromeTabs.move(tabs[i].id, { index: newPositions[i] });
     }
-  }
+  },
+  [TAB_MOVE_TO_END](tabs, { right }) {
+    tabs.reverse(); // when moving right, process tabs from right to left
+    const newPositions = createRange(right, -1, tabs.length);
+    for (let i = 0; i < newPositions.length; i++) {
+      chromeTabs.move(tabs[i].id, { index: newPositions[i] });
+    }
+  },
+};
+
+export default async function tabMovement(direction: TabDirection) {
+  const moveTabs = movements[direction];
+
+  const baseConfig = { currentWindow: true };
+  const selectedConfig = { ...baseConfig, highlighted: true };
 
   const allTabs = await chromeTabs.query(baseConfig);
-  countAll(allTabs);
-  const pinnedTabs = await chromeTabs.query({...baseConfig, pinned: true});
-  countPinned(pinnedTabs);
+  const pinnedTabs = await chromeTabs.query({ ...baseConfig, pinned: true });
 
-  const pinnedTabsToMove = await chromeTabs.query(
-    {...baseConfig, highlighted: true, pinned: true});
-  movePinnedTabs(pinnedTabsToMove);
+  // The current tab is the highlighted one
+  const pinnedTabsToMove = await chromeTabs.query({
+    ...selectedConfig,
+    pinned: true,
+  });
 
-  const unPinnedTabsToMove = await chromeTabs.query(
-    {...baseConfig, highlighted: true, pinned: false});
+  const numPinnedTabs = pinnedTabs.length;
+  if (pinnedTabsToMove.length) {
+    moveTabs(pinnedTabsToMove, { left: 0, right: numPinnedTabs - 1 });
+  }
 
-  moveUnpinnedTabs(unPinnedTabsToMove);
+  // The current tab is the highlighted one
+  const unPinnedTabsToMove = await chromeTabs.query({
+    ...selectedConfig,
+    pinned: false,
+  });
+
+  const numAllTabs = allTabs.length;
+  if (unPinnedTabsToMove.length) {
+    moveTabs(unPinnedTabsToMove, {
+      left: numPinnedTabs,
+      right: numAllTabs - 1,
+    });
+  }
 }

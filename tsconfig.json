@@ -6,7 +6,8 @@
       "dom"
     ],
     "paths": {
-      "src/*": ["src/*"]
+      "src/*": ["src/*"],
+      "test_utils/*": ["test_utils/*"]
     },
     "removeComments": true,
     "target": "ES6",

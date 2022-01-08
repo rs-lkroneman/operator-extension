@@ -2,6 +2,8 @@
 // https://developer.chrome.com/docs/extensions/reference/tabs/
 import {toPromise} from "./util";
 
+export type Tab = chrome.tabs.Tab;
+
 const chromeTabs = {
   query(queryInfo): Promise<chrome.tabs.Tab[]> {
     return new Promise<chrome.tabs.Tab[]>((resolve) => {
