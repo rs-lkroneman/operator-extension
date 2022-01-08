@@ -3,26 +3,28 @@
 import {toPromise} from "./util";
 
 const chromeTabs = {
-  query(...args): Promise<chrome.tabs.Tab[]> {
-    // @ts-ignore
-    return toPromise<chrome.tabs.Tab[]>(chrome.tabs.query, ...args);
+  query(queryInfo): Promise<chrome.tabs.Tab[]> {
+    return new Promise<chrome.tabs.Tab[]>((resolve) => {
+      chrome.tabs.query(queryInfo, (result) => { resolve(result) });
+    });
   },
 
-  moveTabs(tabIds: number[], moveProperties: chrome.tabs.MoveProperties) {
+  moveTabs(...args) {
     // @ts-ignore
-    return toPromise<chrome.tabs.Tab>(chrome.tabs.move, tabIds, moveProperties)
+    return toPromise<chrome.tabs.Tab>(chrome.tabs.move, ...args)
   },
 
   move(tabId: number, moveProperties: chrome.tabs.MoveProperties) {
-    // @ts-ignore
-    return toPromise<chrome.tabs.Tab>(chrome.tabs.move, tabId, moveProperties)
+    return new Promise<chrome.tabs.Tab>((resolve) => {
+      chrome.tabs.move(tabId, moveProperties, (result) => { resolve(result) });
+    });
   },
-
+  // @ts-ignore
   remove(...args) {
     // @ts-ignore
     return chrome.tabs.remove(...args);
   },
-
+  // @ts-ignore
   update(...args) {
     // @ts-ignore
     return chrome.tabs.update(...args);

@@ -1,13 +1,9 @@
 import extension, { Connection } from "../api/extension";
-/* eslint-disable no-undef */
-
 
 class ConnectionClient {
   private static connection: Connection = null;
-  name = "chrome_runner";
 
   static connect() {
-    // @ts-ignore
     ConnectionClient.connection = extension.connect({
       name: 'ConnectionClient.name',
     });

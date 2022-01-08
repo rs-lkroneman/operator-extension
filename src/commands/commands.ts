@@ -4,9 +4,10 @@ import {
   removeTab,
   navigateTo,
   moveCurrentTabToNewWindow,
-  consolidateTabsFromWindows,
-  tabMovement
-} from "../background/helpers";
+  consolidateTabsFromWindows
+} from "src/background/helpers";
+import tabMovement from "src/commands/actions/tabMovement";
+
 import {
   TAB_TOGGLE_PIN_UNPIN,
   TAB_UNPIN_ALL,
@@ -19,7 +20,7 @@ import {
   TAB_MOVE_TO_FRONT,
   TAB_MOVE_TO_END,
   EXTENSIONS_MANAGER,
-} from "../constants";
+} from "src/constants";
 
 const handlers = {
   [TAB_TOGGLE_PIN_UNPIN]() {
@@ -48,8 +49,8 @@ const handlers = {
       }
     });
   },
-  [EXTENSIONS_MANAGER]() {
-    navigateTo("chrome://extensions/")
+  async [EXTENSIONS_MANAGER]() {
+    await navigateTo("chrome://extensions/")
   },
   async [TAB_MOVE_TO_NEW_WINDOW]() {
     await moveCurrentTabToNewWindow();
