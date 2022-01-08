@@ -1,4 +1,3 @@
-/* global chrome */
 import {
   TAB_LEFT,
   TAB_RIGHT,
@@ -6,25 +5,8 @@ import {
   TAB_MOVE_TO_END
 } from "../constants";
 
-const toPromise = (api) => (...args) =>
-  new Promise((resolve) => api(...args, resolve));
-
-const chromeWindow = {
-  getCurrent: toPromise(chrome.windows.getCurrent),
-  get: toPromise(chrome.windows.get),
-  create: toPromise(chrome.windows.create),
-  update: toPromise(chrome.windows.update),
-  getAll: toPromise(chrome.windows.getAll),
-};
-
-const chromeTabs = {
-  query: toPromise(chrome.tabs.query),
-  move: toPromise(chrome.tabs.move),
-  async getCurrent() {
-    const [result] = await this.query({ currentWindow: true, active: true });
-    return result;
-  },
-};
+import chromeWindow from '../api/windows';
+import chromeTabs from "../api/tabs";
 
 export function forEachTab(fn) {
   chrome.windows.getCurrent({ populate: true }, (curWindow) => {
@@ -41,7 +23,7 @@ export function removeTab(id) {
 }
 
 export function navigateTo(url) {
-  chrome.tabs.update({ url });
+  chromeTabs.update({ url });
 }
 
 export async function moveCurrentTabToNewWindow() {
@@ -56,7 +38,7 @@ export async function moveCurrentTabToNewWindow() {
   });
   const tabsToClose = await chromeTabs.query({ windowId: newWindowId });
   await chromeWindow.update(newWindowId, { state: currentWindow.state });
-  await chromeTabs.move([tabId], {
+  await chromeTabs.move(tabId, {
     windowId: newWindowId,
     index: -1,
   });
@@ -92,7 +74,7 @@ export async function consolidateTabsFromWindows() {
     return;
   }
 
-  await chromeTabs.move(flattenedTabsIds, {
+  await chromeTabs.moveTabs(flattenedTabsIds, {
     windowId: currentWindow.id,
     index: -1,
   });

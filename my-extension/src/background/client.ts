@@ -1,9 +1,20 @@
 /* eslint-disable no-undef */
+type Connection = {
+  onDisconnect: {
+    addListener: (callback: Function) => void
+  },
+  onMessage: {
+    addListener: (callback: Function) => void
+  },
+  postMessage: any
+}
+
 class ConnectionClient {
-  connection = null;
+  private static connection: Connection = null;
   name = "chrome_runner";
 
   static connect() {
+    // @ts-ignore
     ConnectionClient.connection = chrome.extension.connect({
       name: 'ConnectionClient.name',
     });

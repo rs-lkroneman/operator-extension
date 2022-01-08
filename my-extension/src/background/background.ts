@@ -1,7 +1,17 @@
-/* eslint-disable no-undef */
+import runtime from "../api/runtime";
+import extension from "../api/extension";
+import commands from "../api/commands";
+
 import commandHandlers, { commandNames } from './commands';
 
-const memory = {};
+type Memory = {
+    commands: string[]
+}
+
+const memory: Memory = {
+    commands: []
+};
+
 const runCommand = (command) => {
     if(command === "REFRESH_COMMANDS") {
         refreshCommands();
@@ -14,19 +24,19 @@ const runCommand = (command) => {
 }
 
 const refreshCommands = () => {
-    chrome.commands.getAll(result => {
+    commands.getAll(result => {
         memory.commands = Array.from(new Set([...commandNames, "REFRESH_COMMANDS"]));
     });
 }
 
-chrome.runtime.onInstalled.addListener(() => {
+runtime.onInstalled.addListener(() => {
     refreshCommands();
 
-    chrome.commands.onCommand.addListener(runCommand);
+    commands.onCommand.addListener(runCommand);
 });
 
 
-chrome.extension.onConnect.addListener((port) => {
+extension.onConnect.addListener((port) => {
     refreshCommands();
     port.postMessage(memory.commands);
     port.onMessage.addListener(runCommand);
