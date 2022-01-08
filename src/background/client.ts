@@ -1,18 +1,14 @@
-import extension, { Connection } from "../api/extension";
-/* eslint-disable no-undef */
-
+import extension, { Connection } from "src/api/extension";
 
 class ConnectionClient {
-  private static connection: Connection = null;
-  name = "chrome_runner";
+  private static connection: Connection | null = null;
 
   static connect() {
-    // @ts-ignore
     ConnectionClient.connection = extension.connect({
-      name: 'ConnectionClient.name',
+      name: "ConnectionClient.name",
     });
 
-    if(ConnectionClient.connection) {
+    if (ConnectionClient.connection) {
       ConnectionClient.connection.onDisconnect.addListener(
         ConnectionClient.onDisconnect
       );
@@ -20,8 +16,9 @@ class ConnectionClient {
   }
 
   static addListener(callback) {
-    if(!ConnectionClient.connection) {
+    if (!ConnectionClient.connection) {
       ConnectionClient.connect();
+      return;
     }
 
     ConnectionClient.connection.onMessage.addListener(callback);
@@ -32,8 +29,9 @@ class ConnectionClient {
   }
 
   static sendMessage(...args) {
-    if(!ConnectionClient.connection) {
+    if (!ConnectionClient.connection) {
       ConnectionClient.connect();
+      return;
     }
 
     ConnectionClient.connection.postMessage(...args);

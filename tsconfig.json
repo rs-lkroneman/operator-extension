@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "lib": [
+      "ESNext",
+      "dom"
+    ],
+    "paths": {
+      "src/*": ["src/*"],
+      "test_utils/*": ["test_utils/*"]
+    },
+    "removeComments": true,
+    "target": "ES6",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "sourceRoot": "./",
+    "strictNullChecks": true,
+    "jsx": "react"
+  },
+}

@@ -63,7 +63,7 @@ export default function useCommandReducer() {
       case COMMANDS_SELECT_UP:
         console.log(COMMANDS_SELECT_UP);
         console.log(selectedCommand && selectedCommand - 1);
-        const atIndexUp = selectedCommand !== null && selectedCommand - 1;
+        const atIndexUp = selectedCommand !== null ? selectedCommand - 1 : undefined;
         return {
           ...state,
           selectedCommand: selectCommand(state.filteredCommands, atIndexUp),

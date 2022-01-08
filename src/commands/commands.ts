@@ -1,12 +1,5 @@
-import {
-  forEachTab,
-  updateTab,
-  removeTab,
-  navigateTo,
-  moveCurrentTabToNewWindow,
-  consolidateTabsFromWindows,
-  tabMovement
-} from "../background/helpers";
+import { tab } from "src/commands/helpers";
+
 import {
   TAB_TOGGLE_PIN_UNPIN,
   TAB_UNPIN_ALL,
@@ -19,56 +12,29 @@ import {
   TAB_MOVE_TO_FRONT,
   TAB_MOVE_TO_END,
   EXTENSIONS_MANAGER,
-} from "../constants";
+} from "src/constants";
+
+import {
+  tabPinning,
+  tabMovement,
+  moveCurrentTabToNewWindow,
+  consolidateTabsFromWindows,
+} from "src/commands/actions";
 
 const handlers = {
-  [TAB_TOGGLE_PIN_UNPIN]() {
-    forEachTab((tab) => {
-      if (!tab.active) {
-        return;
-      }
-
-      updateTab(tab.id, { pinned: !tab.pinned });
-    });
+  [TAB_TOGGLE_PIN_UNPIN]: tabPinning.togglePinned,
+  [TAB_UNPIN_ALL]: tabPinning.unpinAllTabs,
+  [TAB_PIN_ALL]: tabPinning.pinAllTabs,
+  [TAB_CLOSE_ALL_UNPINNED]: tabPinning.closeAllUnpinned,
+  [TAB_MOVE_TO_NEW_WINDOW]: moveCurrentTabToNewWindow,
+  [TAB_CONSOLIDATE_FROM_WINDOWS]: consolidateTabsFromWindows,
+  [TAB_LEFT]: tabMovement.tabLeft,
+  [TAB_RIGHT]: tabMovement.tabRight,
+  [TAB_MOVE_TO_FRONT]: tabMovement.tabStart,
+  [TAB_MOVE_TO_END]: tabMovement.tabEnd,
+  async [EXTENSIONS_MANAGER]() {
+    await tab.navigateTo("chrome://extensions/");
   },
-  [TAB_UNPIN_ALL]() {
-    forEachTab((tab) => {
-      updateTab(tab.id, { pinned: false });
-    });
-  },
-  [TAB_PIN_ALL]() {
-    forEachTab((tab) => {
-      updateTab(tab.id, { pinned: true });
-    });
-  },
-  [TAB_CLOSE_ALL_UNPINNED]() {
-    forEachTab((tab) => {
-      if (!tab.pinned) {
-        removeTab(tab.id);
-      }
-    });
-  },
-  [EXTENSIONS_MANAGER]() {
-    navigateTo("chrome://extensions/")
-  },
-  async [TAB_MOVE_TO_NEW_WINDOW]() {
-    await moveCurrentTabToNewWindow();
-  },
-  async [TAB_CONSOLIDATE_FROM_WINDOWS]() {
-    await consolidateTabsFromWindows();
-  },
-  async [TAB_LEFT]() {
-    await tabMovement(TAB_LEFT);
-  },
-  async [TAB_RIGHT]() {
-    await tabMovement(TAB_RIGHT);
-  },
-  async [TAB_MOVE_TO_FRONT]() {
-    await tabMovement(TAB_MOVE_TO_FRONT);
-  },
-  async [TAB_MOVE_TO_END]() {
-    await tabMovement(TAB_MOVE_TO_END);
-  }
 };
 
 export const commandNames = Object.keys(handlers);
