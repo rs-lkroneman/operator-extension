@@ -19,53 +19,61 @@ export type Boundaries = {
   right: number;
 };
 
+const moveTabsLeft = (tabs, { left, right }) => {
+  const [firstTab] = tabs;
+  const isFirstInRange = firstTab && firstTab.index === left;
+
+  // if wrapping around, we need to move only one tab,
+  // even if more than one is selected
+  if (isFirstInRange) {
+    chromeTabs.move(firstTab.id, { index: right });
+    return;
+  }
+
+  // If not wrapping around move all selected tabs to the left
+  tabs.map((tab) => chromeTabs.move(tab.id, { index: tab.index - 1 }));
+};
+
+const moveTabsRight = (tabs, { left, right }) => {
+  const lastTab = tabs[tabs.length - 1];
+  const isLastInRange = lastTab && lastTab.index === right;
+
+  // if wrapping around, we need to move only one tab,
+  // even if more than one is selected
+  if (isLastInRange) {
+    chromeTabs.move(lastTab.id, { index: left });
+    return;
+  }
+
+  // If not wrapping around move all selected tabs to the right by incrementing their index
+  tabs.reverse(); // when moving right, process tabs from right to left
+  tabs.map((tab) => chromeTabs.move(tab.id, { index: tab.index + 1 }));
+};
+
+const moveTabsToFront = (tabs, { left, right }) => {
+  const newPositions = createRange(left, 1, tabs.length);
+  for (let i = 0; i < newPositions.length; i++) {
+    chromeTabs.move(tabs[i].id, { index: newPositions[i] });
+  }
+};
+
+const moveTabsToEnd = (tabs, { right }) => {
+  tabs.reverse(); // when moving right, process tabs from right to left
+  const newPositions = createRange(right, -1, tabs.length);
+  for (let i = 0; i < newPositions.length; i++) {
+    chromeTabs.move(tabs[i].id, { index: newPositions[i] });
+  }
+};
+
 export type Movements = {
   [index in TabDirection]: (id: any[], boundaries: Boundaries) => void;
 };
 
 const movements: Movements = {
-  [TAB_LEFT](tabs, { left, right }) {
-    const [firstTab] = tabs;
-    const isFirstInRange = firstTab && firstTab.index === left;
-
-    // if wrapping around, we need to move only one tab,
-    // even if more than one is selected
-    if (isFirstInRange) {
-      chromeTabs.move(firstTab.id, { index: right });
-      return;
-    }
-
-    // If not wrapping around move all selected tabs to the left
-    tabs.map((tab) => chromeTabs.move(tab.id, { index: tab.index - 1 }));
-  },
-  [TAB_RIGHT](tabs, { left, right }) {
-    const lastTab = tabs[tabs.length - 1];
-    const isLastInRange = lastTab && lastTab.index === right;
-
-    // if wrapping around, we need to move only one tab,
-    // even if more than one is selected
-    if (isLastInRange) {
-      chromeTabs.move(lastTab.id, { index: left });
-      return;
-    }
-
-    // If not wrapping around move all selected tabs to the right by incrementing their index
-    tabs.reverse(); // when moving right, process tabs from right to left
-    tabs.map((tab) => chromeTabs.move(tab.id, { index: tab.index + 1 }));
-  },
-  [TAB_MOVE_TO_FRONT](tabs, { left, right }) {
-    const newPositions = createRange(left, 1, tabs.length);
-    for (let i = 0; i < newPositions.length; i++) {
-      chromeTabs.move(tabs[i].id, { index: newPositions[i] });
-    }
-  },
-  [TAB_MOVE_TO_END](tabs, { right }) {
-    tabs.reverse(); // when moving right, process tabs from right to left
-    const newPositions = createRange(right, -1, tabs.length);
-    for (let i = 0; i < newPositions.length; i++) {
-      chromeTabs.move(tabs[i].id, { index: newPositions[i] });
-    }
-  },
+  [TAB_LEFT]: moveTabsLeft,
+  [TAB_RIGHT]: moveTabsRight,
+  [TAB_MOVE_TO_FRONT]: moveTabsToFront,
+  [TAB_MOVE_TO_END]: moveTabsToEnd,
 };
 
 export default async function tabMovement(direction: TabDirection) {
