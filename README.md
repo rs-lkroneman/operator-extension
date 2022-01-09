@@ -1,41 +1,29 @@
-### Building a React Chrome Extension
+# Chrome Util Extension
 
-1. We're following the guide on [Medium](https://gilfink.medium.com/building-a-chrome-extension-using-react-c5bfe45aaf36) to build a chrome extension using react
+Inspired by Alfred, Cmd+Shift+P (Vscode, Chrome Devtools), Cmd+Shift+A (Intellij)
 
-### Getting started (Build)
+1. Install the Extension to Chrome or Edge
 
-1. Clone the repository
+2. Open the Extension, by using the hotkey (control + space) or clicking the icon
 
-2. ensure you have `node 14.15.4` installed. If you use asdf it should prompt you if you don't have it installed
+3. Search and execute a command
 
-3. ensure you have `yarn` installed, i use `1.22.4` but it shouldn't matter too much
+## Supported Commands
 
-4. cd into the `my-extension directory`
+- `pin unpin tab`
+- `unpin all tabs`
+- `pin all tabs`
+- `close all unpinned tabs`
+- `move current tab to new window`
+- `collect all tabs into one window`
+- `move tab highlighted tabs left`
+- `move tab highlighted tabs right`
+- `move tab highlighted tabs to start`
+- `move tab highlighted tabs to end`
+- `open extension manager`
 
-5. run yarn to install packages
+[Command configuration in code](./src/commands/commands.ts)
 
-6. build the project by running `yarn build` in the `my-extension` directory
+## Contributing
 
-7. open chrome
-
-8. navigate to `chrome://extensions/`
-
-9. Enable developer mode in the top right corner
-
-![developer mode](./docs/assets/developer_toggle.png)
-
-10. Click on the "load unpacked" button in the top left
-
-![load unpacked](./docs/assets/load_unpacked.png)
-
-11. Select the build folder that gets generated from running `yarn build`
-
-![folder selection](./docs/assets/folder_selection.png)
-
-### Development
-
-Once your extension is loaded to reload the extension you should only have to click the reload button
-
-![reload button](./docs/assets/reload_button.png)
-
-To have webpack watch for changes use `yarn watch` instead of yarn build. You will still need to click the reload button to see your latest changes.
+To get the environment set up locally see [Contributing](./docs/contributing/getting-started.md)
