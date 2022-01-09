@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Run Js Tests
+    name: Build Extension
     runs-on: ubuntu-20.04
 
     steps:
@@ -41,21 +41,21 @@ jobs:
           path: build # path from yarn build
 
   attach_to_release:
-    name: Download File
+    name: Upload Extension to Release
     runs-on: ubuntu-20.04
     needs: build
+    env:
+      RELEASE: ${{ github.event.release.tag_name }}
     steps:
       - uses: actions/download-artifact@v2
         with:
           name: build # our custom name
-          path: build
+          path: build # path to place build in
       - name: Zip the folder for upload
-        run: zip -r ./build.zip ./build
+        run: zip -r ./chrome-util-$RELEASE.zip ./build
       - name: Add the artifact to the release
         run: gh release upload $RELEASE ./build.zip --repo "$OWNER/$REPO"
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
-          RELEASE: ${{ github.event.release.tag_name }}
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
-          RELEASE_REPOSITORY: ${{ env.GITHUB_REPOSITORY }}
