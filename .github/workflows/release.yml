@@ -9,9 +9,6 @@ jobs:
   build:
     name: Build Extension
     runs-on: ubuntu-20.04
-    env:
-      RELEASE_VERSION: ${{ github.event.release.tag_name }}
-
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js v16
@@ -39,7 +36,7 @@ jobs:
       - name: Save Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: chrome-util-$RELEASE_VERSION # our custom name
+          name: chrome-util-${{ github.event.release.tag_name }} # our custom name
           path: build # path from yarn build
 
   attach_to_release:
@@ -51,8 +48,8 @@ jobs:
     steps:
       - uses: actions/download-artifact@v2
         with:
-          name: chrome-util-$RELEASE_VERSION # our custom name
-          path: chrome-util-$RELEASE_VERSION
+          name: chrome-util-${{ github.event.release.tag_name }} # our custom name
+          path: chrome-util-${{ github.event.release.tag_name }}
       - name: Zip the folder for upload
         run: zip -r ./chrome-util-$RELEASE_VERSION.zip ./chrome-util-$RELEASE_VERSION
       - name: Add the artifact to the release
