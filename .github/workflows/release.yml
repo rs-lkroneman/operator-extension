@@ -6,7 +6,7 @@ on:
     types: [prereleased]
 
 jobs:
-  release:
+  build:
     name: Run Js Tests
     runs-on: ubuntu-20.04
 
@@ -37,5 +37,16 @@ jobs:
       - name: Save Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: first-attempt
-          path: build
+          name: build # our custom name
+          path: build # path from yarn build
+
+  attach_to_release:
+    name: Download File
+    runs-on: ubuntu-20.04
+    needs: build
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: build # our custom name
+      - name: Display structure of downloaded files
+        run: ls -R
