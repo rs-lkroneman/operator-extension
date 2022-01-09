@@ -12,6 +12,7 @@
 
 # production
 /build
+/public/manifest.json
 
 # misc
 .DS_Store
