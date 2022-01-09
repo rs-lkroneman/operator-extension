@@ -49,7 +49,10 @@ jobs:
         with:
           name: build # our custom name
           path: build
-      - name: Display structure of downloaded files
-        run: ls -R
-      - name: Check existence of zip
-        run: which zip
+      - name: Zip the folder for upload
+        run: zip build
+      - name: Add the artifact to the release
+        run: gh release upload v0.0.1 ./build.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+          RELEASE: ${{ github.event.release.tag_name }}
