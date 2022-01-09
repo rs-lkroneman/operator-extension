@@ -20,20 +20,20 @@
 
 9. Enable developer mode in the top right corner
 
-![developer mode](./docs/assets/developer_toggle.png)
+![developer mode](/docs/assets/developer_toggle.png)
 
 10. Click on the "load unpacked" button in the top left
 
-![load unpacked](./docs/assets/load_unpacked.png)
+![load unpacked](/docs/assets/load_unpacked.png)
 
 11. Select the build folder that gets generated from running `yarn build`
 
-![folder selection](./docs/assets/folder_selection.png)
+![folder selection](/docs/assets/folder_selection.png)
 
 ## Development
 
 Once your extension is loaded to reload the extension you should only have to click the reload button
 
-![reload button](./docs/assets/reload_button.png)
+![reload button](/docs/assets/reload_button.png)
 
 To have webpack watch for changes use `yarn watch` instead of yarn build. You will still need to click the reload button to see your latest changes.
