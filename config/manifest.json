@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "My Extension",
-  "description": "This extension is a starting point to create a real Chrome extension",
+  "name": "Chrome Util Runner",
+  "description": "A command runner inspired by Alfred, Cmd+Shift+P (Vscode, Chrome Devtools), Cmd+Shift+A (Intellij)",
   "version": "1.3",
   "browser_action": {
     "default_popup": "popup.html",

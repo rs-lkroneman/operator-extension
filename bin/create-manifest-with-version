@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+const path = require('path');
+const fsExtra = require('fs-extra');
+const manifest = require("../config/manifest.json");
+
+const OUTPUT_PATH = path.resolve('public');
+const RELEASE_VERSION = process.env.RELEASE_VERSION;
+const EXTENSION_VERSION = RELEASE_VERSION || `development-${new Date().toISOString()}`;
+
+const updatedManifest = {
+    ...manifest,
+    version: `${EXTENSION_VERSION}`
+};
+
+fsExtra.writeJson(path.join(OUTPUT_PATH, 'manifest.json'), updatedManifest)
+    .catch(console.error);
