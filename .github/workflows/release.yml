@@ -49,8 +49,8 @@ jobs:
         with:
           name: build # our custom name
           path: build
-#      - name: Zip the folder for upload
-#        run: zip build
+      - name: Zip the folder for upload
+        run: zip ./build
       - name: Add the artifact to the release
         run: gh release upload v0.0.1 ./build.zip
         env:
