@@ -9,6 +9,8 @@ jobs:
   build:
     name: Build Extension
     runs-on: ubuntu-20.04
+    env:
+      RELEASE_VERSION: ${{ github.event.release.tag_name }}
 
     steps:
       - uses: actions/checkout@v2
@@ -37,7 +39,7 @@ jobs:
       - name: Save Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: build # our custom name
+          name: chrome-util-$RELEASE_VERSION # our custom name
           path: build # path from yarn build
 
   attach_to_release:
@@ -45,16 +47,16 @@ jobs:
     runs-on: ubuntu-20.04
     needs: build
     env:
-      RELEASE: ${{ github.event.release.tag_name }}
+      RELEASE_VERSION: ${{ github.event.release.tag_name }}
     steps:
       - uses: actions/download-artifact@v2
         with:
-          name: build # our custom name
-          path: build # path to place build in
+          name: chrome-util-$RELEASE_VERSION # our custom name
+          path: chrome-util-$RELEASE_VERSION
       - name: Zip the folder for upload
-        run: zip -r ./chrome-util-$RELEASE.zip ./build
+        run: zip -r ./chrome-util-$RELEASE_VERSION.zip ./chrome-util-$RELEASE_VERSION
       - name: Add the artifact to the release
-        run: gh release upload $RELEASE ./chrome-util-$RELEASE.zip --repo "$OWNER/$REPO"
+        run: gh release upload $RELEASE_VERSION ./chrome-util-$RELEASE_VERSION.zip --repo "$OWNER/$REPO"
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
           OWNER: ${{ github.repository_owner }}
