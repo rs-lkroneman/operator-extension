@@ -52,7 +52,8 @@ jobs:
       - name: Zip the folder for upload
         run: zip -r ./build.zip ./build
       - name: Add the artifact to the release
-        run: gh release upload v0.0.1 ./build.zip
+        run: gh release upload $RELEASE ./build.zip --repo $RELEASE_REPOSITORY
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
           RELEASE: ${{ github.event.release.tag_name }}
+          RELEASE_REPOSITORY: ${{ env.GITHUB_REPOSITORY }}
