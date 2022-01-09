@@ -9,6 +9,8 @@ jobs:
   build:
     name: Build Extension
     runs-on: ubuntu-20.04
+    env:
+      RELEASE_VERSION: ${{ github.event.release.tag_name }} # RELEASE VERSION IS USED TO GENERATE A MANIFEST
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js v16
