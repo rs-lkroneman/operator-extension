@@ -54,7 +54,7 @@ jobs:
       - name: Zip the folder for upload
         run: zip -r ./chrome-util-$RELEASE.zip ./build
       - name: Add the artifact to the release
-        run: gh release upload $RELEASE ./build.zip --repo "$OWNER/$REPO"
+        run: gh release upload $RELEASE ./chrome-util-$RELEASE.zip --repo "$OWNER/$REPO"
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
           OWNER: ${{ github.repository_owner }}
