@@ -45,9 +45,6 @@
         "mac": "MacCtrl+Shift+Right"
       },
       "description": "Move selected tab(s) right"
-    },
-    "close_tabs_to_the_right": {
-      "description": "Close all tabs to the right"
     }
   },
   "icons": {

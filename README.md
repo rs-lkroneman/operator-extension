@@ -40,6 +40,10 @@ To modify these shortcuts:
 - open the runner and search for `open extension shortcuts`
 - or navigate to `chrome://extensions/shortcuts`
 
+You can also assign shortcuts to any commands defined in [./shortcutConfig.ts](./shortcutConfig.ts)
+
+[But no more than 4 preset shortcuts and be set from the extension itself](https://newbedev.com/google-chrome-maximum-of-4-chrome-commands-allowed)
+
 ## Contributing
 
 To get the environment set up locally see [Contributing](./docs/contributing/getting-started.md)

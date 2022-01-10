@@ -6,7 +6,7 @@
     "start": "yarn manifest && webpack -w --config ./config/webpack.config.js",
     "build": "yarn manifest && webpack --config ./config/webpack.config.js",
     "watch": "yarn manifest && webpack -w --config ./config/webpack.config.js",
-    "manifest": "bin/create-manifest-with-version",
+    "manifest": "ts-node --project ./tsconfig.json bin/create-manifest-with-version",
     "test": "jest"
   },
   "eslintConfig": {
@@ -50,7 +50,8 @@
     "react-refresh": "^0.8.3",
     "resolve": "1.18.1",
     "sass-loader": "^12.4.0",
-    "semver": "7.3.2"
+    "semver": "7.3.2",
+    "ts-node": "^10.4.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.4",

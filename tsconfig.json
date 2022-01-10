@@ -9,6 +9,7 @@
       "src/*": ["src/*"],
       "test_utils/*": ["test_utils/*"]
     },
+//    "module": "commonjs",
     "removeComments": true,
     "target": "ES6",
     "esModuleInterop": true,
