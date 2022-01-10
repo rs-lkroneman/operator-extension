@@ -23,19 +23,10 @@ export const pinAllTabs = () => {
   });
 };
 
-export const closeAllUnpinned = () => {
-  currentWindow.forEachTab((tab) => {
-    if (!tab.pinned) {
-      chromeTabs.remove(tab.id);
-    }
-  });
-};
-
 const tabPinning = {
   togglePinned,
   unpinAllTabs,
   pinAllTabs,
-  closeAllUnpinned,
 };
 
 export default tabPinning;

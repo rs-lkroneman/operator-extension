@@ -14,6 +14,7 @@ Inspired by Alfred, Cmd+Shift+P (Vscode, Chrome Devtools), Cmd+Shift+A (Intellij
 - `unpin all tabs`
 - `pin all tabs`
 - `close all unpinned tabs`
+- `close tabs to the right`
 - `move current tab to new window`
 - `collect all tabs into one window`
 - `move tab highlighted tabs left`

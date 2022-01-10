@@ -12,10 +12,12 @@ import {
   TAB_MOVE_TO_FRONT,
   TAB_MOVE_TO_END,
   EXTENSIONS_MANAGER,
+  TAB_CLOSE_ALL_TO_THE_RIGHT,
 } from "src/constants";
 
 import {
   tabPinning,
+  tabClosing,
   tabMovement,
   moveCurrentTabToNewWindow,
   consolidateTabsFromWindows,
@@ -25,7 +27,8 @@ const handlers = {
   [TAB_TOGGLE_PIN_UNPIN]: tabPinning.togglePinned,
   [TAB_UNPIN_ALL]: tabPinning.unpinAllTabs,
   [TAB_PIN_ALL]: tabPinning.pinAllTabs,
-  [TAB_CLOSE_ALL_UNPINNED]: tabPinning.closeAllUnpinned,
+  [TAB_CLOSE_ALL_UNPINNED]: tabClosing.closeAllUnpinned,
+  [TAB_CLOSE_ALL_TO_THE_RIGHT]: tabClosing.closeAllToTheRight,
   [TAB_MOVE_TO_NEW_WINDOW]: moveCurrentTabToNewWindow,
   [TAB_CONSOLIDATE_FROM_WINDOWS]: consolidateTabsFromWindows,
   [TAB_LEFT]: tabMovement.tabLeft,
