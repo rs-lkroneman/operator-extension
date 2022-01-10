@@ -18,6 +18,7 @@ export const TAB_MOVE_TO_END = "move_tab_to_end";
 
 // Extensions Management
 export const EXTENSIONS_MANAGER = "open_extensions";
+export const EXTENSION_SHORTCUT_MANAGER = "open_extension_shortcuts";
 
 // Store Actions
 export const COMMANDS_UPDATE = "COMMANDS_UPDATE";
