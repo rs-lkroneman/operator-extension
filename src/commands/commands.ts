@@ -5,6 +5,7 @@ import {
   TAB_UNPIN_ALL,
   TAB_PIN_ALL,
   TAB_CLOSE_ALL_UNPINNED,
+  TAB_CLOSE_ALL_TO_THE_RIGHT,
   TAB_MOVE_TO_NEW_WINDOW,
   TAB_CONSOLIDATE_FROM_WINDOWS,
   TAB_LEFT,
@@ -12,7 +13,7 @@ import {
   TAB_MOVE_TO_FRONT,
   TAB_MOVE_TO_END,
   EXTENSIONS_MANAGER,
-  TAB_CLOSE_ALL_TO_THE_RIGHT,
+  EXTENSION_SHORTCUT_MANAGER,
 } from "src/constants";
 
 import {
@@ -37,6 +38,9 @@ const handlers = {
   [TAB_MOVE_TO_END]: tabMovement.tabEnd,
   async [EXTENSIONS_MANAGER]() {
     await tab.navigateTo("chrome://extensions/");
+  },
+  async [EXTENSION_SHORTCUT_MANAGER]() {
+    await tab.navigateTo("chrome://extensions/shortcuts");
   },
 };
 

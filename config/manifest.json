@@ -18,24 +18,36 @@
     "_execute_browser_action": {
       "description": "Pin or unpin the current tab.",
       "suggested_key": {
-        "default": "Alt+Shift+A",
+        "default": "Ctrl+Space",
+        "windows": "Ctrl+Space",
         "mac": "MacCtrl+Space"
       }
     },
     "pin_unpin_tab": {
       "description": "Pin or unpin the current tab.",
       "suggested_key": {
-        "default": "Ctrl+Shift+X"
+        "default": "Ctrl+Shift+X",
+        "windows": "Ctrl+Shift+X"
       }
     },
-    "pin_all_tabs": {
-      "description": "Pin all tabs in the current window."
+    "move_tab_left": {
+      "suggested_key": {
+        "default": "Shift+Alt+Left",
+        "windows": "Shift+Alt+Left",
+        "mac": "MacCtrl+Shift+Left"
+      },
+      "description": "Move selected tab(s) left"
     },
-    "unpin_all_tabs": {
-      "description": "Unpin all pinned tabs in the current window."
+    "move_tab_right": {
+      "suggested_key": {
+        "default": "Shift+Alt+Right",
+        "windows": "Shift+Alt+Right",
+        "mac": "MacCtrl+Shift+Right"
+      },
+      "description": "Move selected tab(s) right"
     },
-    "close_all_unpinned_tabs": {
-      "description": "Pin or unpin the current tab."
+    "close_tabs_to_the_right": {
+      "description": "Close all tabs to the right"
     }
   },
   "icons": {
