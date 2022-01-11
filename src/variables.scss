@@ -1,0 +1,19 @@
+:root {
+  --foreground-color-primary: #444;
+  --background-color-primary: #f2f2f2f2;
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  :root {
+    --foreground-color-primary: #f2f2f2;
+    --background-color-primary: #333;
+  }
+}
+
+$popup-background: var(--background-color-primary);
+$popup-text: var(--foreground-color-primary);
+$search-input-text: var(--foreground-color-primary);
+$search-input-background: var(--background-color-primary);
+$search-selected-background: var(--foreground-color-primary);
+$search-selected-text: var(--background-color-primary);
+
