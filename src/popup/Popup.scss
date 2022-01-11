@@ -1,10 +1,15 @@
+@import "src/variables.scss";
+
 body {
   margin: 0;
   padding: 0;
 }
 
+$popup-text: #333 !default;
+$popup-background: #333 !default;
+
 .Popup {
-  background: #333;
+  background: $popup-background;
 
   &__Select {
     &Wrapper {
@@ -12,6 +17,6 @@ body {
     }
     display: none;
     background: transparent;
-    color: #f2f2f2;;
+    color: $popup-text;
   }
 }

@@ -1,2 +1,4 @@
-import './options.scss';
-console.log("hello options")
+import "./options.scss";
+import logger from "src/utils/logger";
+
+logger.info("Hello Options");

@@ -1,8 +1,15 @@
+@import "src/variables.scss";
+
+$search-input-text: #fff !default;
+
 .SearchInput {
     min-width: 300px;
     min-height: 40px;
-    color: azure;
+    color: $search-input-text;
     background: transparent;
+    border-style: none;
+    padding: 0 20px;
+
     &:focus {
         outline: none;
         border: none;

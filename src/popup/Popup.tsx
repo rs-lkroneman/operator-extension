@@ -1,16 +1,13 @@
-import React, { useContext, useEffect } from 'react';
-import Store from '../store/store';
+import React, { useContext, useEffect } from "react";
+import Store from "../store/store";
 
 // constants
-import {
-  KEYCODE_KEYDOWN,
-  KEYCODE_KEYUP,
-  KEYCODE_ENTER
-} from '../constants';
+import { KEYCODE_KEYDOWN, KEYCODE_KEYUP, KEYCODE_ENTER } from "../constants";
 
 // components
 import SearchInput from "../components/SearchInput";
-import SuggestionList from '../components/SuggestionList';
+import SuggestionList from "../components/SuggestionList";
+import logger from "src/utils/logger";
 
 function Popup() {
   const { state, dispatch } = useContext(Store);
@@ -18,27 +15,27 @@ function Popup() {
   const selectRef = React.createRef();
 
   const handleKeyPress = (e) => {
-    if(e.keyCode === KEYCODE_ENTER) {
+    if (e.keyCode === KEYCODE_ENTER) {
       e.preventDefault();
-      console.log("KEYCODE_ENTER");
+      logger.info("KEYCODE_ENTER");
       dispatch({
-        type: "COMMANDS_EXECUTE"
+        type: "COMMANDS_EXECUTE",
       });
       return;
     }
 
-    if(e.keyCode === KEYCODE_KEYUP) {
+    if (e.keyCode === KEYCODE_KEYUP) {
       e.preventDefault();
       dispatch({
-        type: "COMMANDS_SELECT_UP"
+        type: "COMMANDS_SELECT_UP",
       });
       return;
     }
 
-    if(e.keyCode === KEYCODE_KEYDOWN) {
+    if (e.keyCode === KEYCODE_KEYDOWN) {
       e.preventDefault();
       dispatch({
-        type: "COMMANDS_SELECT_DOWN"
+        type: "COMMANDS_SELECT_DOWN",
       });
       return;
     }
@@ -47,27 +44,44 @@ function Popup() {
     const searchValue = searchInput.value;
     dispatch({
       type: "COMMANDS_FILTER",
-      payload: searchValue.trim()
+      payload: searchValue.trim(),
+    });
+  };
+
+  const handleOptionClick = (option: string) => {
+    dispatch({
+      type: "COMMANDS_EXECUTE_OPTION",
+      payload: option,
     });
   };
 
   useEffect(() => {
-    console.log('current select value')
-    console.log(selectRef.current.value);
-  }, [state.searchTerm, selectRef])
+    logger.info("current select value");
+    logger.info(selectRef.current.value);
+  }, [state.searchTerm, selectRef]);
 
-  const selectedValue = filteredCommands[selectedCommand] || '';
-  console.log('selectedValue');
-  console.log(selectedValue);
+  const selectedValue = filteredCommands[selectedCommand] || "";
   return (
     <div className="Popup">
       <SearchInput type="text" onKeyDown={handleKeyPress} />
-      <SuggestionList selectedValue={selectedValue} options={filteredCommands} />
+      <SuggestionList
+        selectedValue={selectedValue}
+        options={filteredCommands}
+        onOptionClick={handleOptionClick}
+      />
       <div className="Popup__SelectWrapper">
-        <select className="Popup__Select" ref={selectRef} value={selectedValue} onChange={() => {}}>
-        {filteredCommands !== null && filteredCommands.map(
-          command => <option value={command} key={command}>{command}</option>
-        )}
+        <select
+          className="Popup__Select"
+          ref={selectRef}
+          value={selectedValue}
+          onChange={() => {}}
+        >
+          {filteredCommands !== null &&
+            filteredCommands.map((command) => (
+              <option value={command} key={command}>
+                {command}
+              </option>
+            ))}
         </select>
       </div>
     </div>
