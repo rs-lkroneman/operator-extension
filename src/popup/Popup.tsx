@@ -8,6 +8,7 @@ import { KEYCODE_KEYDOWN, KEYCODE_KEYUP, KEYCODE_ENTER } from "../constants";
 import SearchInput from "../components/SearchInput";
 import SuggestionList from "../components/SuggestionList";
 import logger from "src/utils/logger";
+import runtime from "src/api/runtime";
 
 function Popup() {
   const { state, dispatch } = useContext(Store);

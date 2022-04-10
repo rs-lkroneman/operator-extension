@@ -1,12 +1,12 @@
-import extension, { Connection } from "src/api/extension";
+import runtime from "src/api/runtime";
+
+type Port = chrome.runtime.Port;
 
 class ConnectionClient {
-  private static connection: Connection | null = null;
+  private static connection: Port | null = null;
 
   static connect() {
-    ConnectionClient.connection = extension.connect({
-      name: "ConnectionClient.name",
-    });
+    ConnectionClient.connection = runtime.connect();
 
     if (ConnectionClient.connection) {
       ConnectionClient.connection.onDisconnect.addListener(
@@ -34,6 +34,7 @@ class ConnectionClient {
       return;
     }
 
+    // @ts-ignore
     ConnectionClient.connection.postMessage(...args);
   }
 }

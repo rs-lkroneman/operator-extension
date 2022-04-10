@@ -6,14 +6,7 @@ import useCommandReducer from "src/store/useCommandReducer";
 import { COMMANDS_UPDATE } from "src/constants";
 import logger from "src/utils/logger";
 
-const initialState = {
-  searchTerm: "",
-  selectedCommand: null,
-  commands: [],
-  filteredCommands: [],
-};
-
-const store = createContext(initialState);
+const store = createContext({});
 const { Provider } = store;
 
 type StateProviderProps = {} & React.ComponentProps<"div">;
