@@ -8,7 +8,7 @@ import { KEYCODE_KEYDOWN, KEYCODE_KEYUP, KEYCODE_ENTER } from "../constants";
 import SearchInput from "../components/SearchInput";
 import SuggestionList from "../components/SuggestionList";
 import logger from "src/utils/logger";
-import runtime from "src/api/runtime";
+import backgroundClient from "src/background/client";
 
 function Popup() {
   const { state, dispatch } = useContext(Store);
@@ -55,6 +55,10 @@ function Popup() {
       payload: option,
     });
   };
+
+  useEffect(() => {
+    backgroundClient.sendMessage("Wake Up");
+  }, []);
 
   useEffect(() => {
     logger.info("current select value");

@@ -11,9 +11,10 @@ const memory: Memory = {
   commands: [],
 };
 
-const runCommand = (command) => {
+const runCommand = (command: string) => {
   if (command === "REFRESH_COMMANDS") {
     refreshCommands();
+    runtime.sendMessage(memory.commands);
     return;
   }
 
@@ -30,10 +31,7 @@ const refreshCommands = () => {
   });
 };
 
-runtime.onInstalled.addListener(() => {
-  refreshCommands();
-  commands.onCommand.addListener(runCommand);
-});
+commands.onCommand.addListener(runCommand);
 
 runtime.onConnect.addListener((port) => {
   refreshCommands();

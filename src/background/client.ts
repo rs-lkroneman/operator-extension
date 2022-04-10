@@ -3,10 +3,13 @@ import runtime from "src/api/runtime";
 type Port = chrome.runtime.Port;
 
 class ConnectionClient {
+  private static connectionName: string = "Util Runner";
   private static connection: Port | null = null;
 
   static connect() {
-    ConnectionClient.connection = runtime.connect();
+    ConnectionClient.connection = runtime.connect({
+      name: ConnectionClient.connectionName,
+    });
 
     if (ConnectionClient.connection) {
       ConnectionClient.connection.onDisconnect.addListener(
