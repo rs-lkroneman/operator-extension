@@ -22,7 +22,10 @@ fsExtra
 
     return fsExtra.writeJson(
       path.join(OUTPUT_PATH, "manifest.json"),
-      updatedManifest
+      updatedManifest,
+      {
+        spaces: 2,
+      }
     );
   })
   .catch(console.error);

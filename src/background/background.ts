@@ -1,43 +1,27 @@
 import runtime from "../api/runtime";
-import extension from "../api/extension";
 import commands from "../api/commands";
 
-import commandHandlers, { commandNames } from '../commands';
+import commandHandlers, { commandNames } from "../commands";
 
-type Memory = {
-    commands: string[]
-}
+const runCommand = (command: string) => {
+  if (command === "REFRESH_COMMANDS") {
+    const commands = refreshCommands();
+    runtime.sendMessage(commands);
+    return;
+  }
 
-const memory: Memory = {
-    commands: []
+  if (Object.hasOwnProperty.call(commandHandlers, command)) {
+    commandHandlers[command]();
+  }
 };
 
-const runCommand = (command) => {
-    if(command === "REFRESH_COMMANDS") {
-        refreshCommands();
-        return;
-    }
-
-    if(Object.hasOwnProperty.call(commandHandlers, command)) {
-        commandHandlers[command]();
-    }
-}
-
 const refreshCommands = () => {
-    commands.getAll(result => {
-        memory.commands = Array.from(new Set([...commandNames, "REFRESH_COMMANDS"]));
-    });
-}
+  return Array.from(new Set([...commandNames, "REFRESH_COMMANDS"]));
+};
 
-runtime.onInstalled.addListener(() => {
-    refreshCommands();
-
-    commands.onCommand.addListener(runCommand);
-});
-
-
-extension.onConnect.addListener((port) => {
-    refreshCommands();
-    port.postMessage(memory.commands);
-    port.onMessage.addListener(runCommand);
+commands.onCommand.addListener(runCommand);
+runtime.onConnect.addListener((port) => {
+  const commands = refreshCommands();
+  port.postMessage(commands);
+  port.onMessage.addListener(runCommand);
 });

@@ -17,6 +17,7 @@ export const TAB_MOVE_TO_FRONT = "move_tab_to_front";
 export const TAB_MOVE_TO_END = "move_tab_to_end";
 
 // Extensions Management
+export const RELOAD = "reload_extension";
 export const EXTENSIONS_MANAGER = "open_extensions";
 export const EXTENSION_SHORTCUT_MANAGER = "open_extension_shortcuts";
 

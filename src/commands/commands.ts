@@ -1,6 +1,8 @@
+import runtime from "src/api/runtime";
 import { tab } from "src/commands/helpers";
 
 import {
+  RELOAD,
   TAB_TOGGLE_PIN_UNPIN,
   TAB_UNPIN_ALL,
   TAB_PIN_ALL,
@@ -25,6 +27,9 @@ import {
 } from "src/commands/actions";
 
 const handlers = {
+  [RELOAD]() {
+    runtime.reload();
+  },
   [TAB_TOGGLE_PIN_UNPIN]: tabPinning.togglePinned,
   [TAB_UNPIN_ALL]: tabPinning.unpinAllTabs,
   [TAB_PIN_ALL]: tabPinning.pinAllTabs,

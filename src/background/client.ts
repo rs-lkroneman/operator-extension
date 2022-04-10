@@ -1,11 +1,14 @@
-import extension, { Connection } from "src/api/extension";
+import runtime from "src/api/runtime";
+
+type Port = chrome.runtime.Port;
 
 class ConnectionClient {
-  private static connection: Connection | null = null;
+  private static connectionName: string = "Util Runner";
+  private static connection: Port | null = null;
 
   static connect() {
-    ConnectionClient.connection = extension.connect({
-      name: "ConnectionClient.name",
+    ConnectionClient.connection = runtime.connect({
+      name: ConnectionClient.connectionName,
     });
 
     if (ConnectionClient.connection) {
@@ -34,6 +37,7 @@ class ConnectionClient {
       return;
     }
 
+    // @ts-ignore
     ConnectionClient.connection.postMessage(...args);
   }
 }
