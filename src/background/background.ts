@@ -30,12 +30,12 @@ const refreshCommands = () => {
   });
 };
 
-runtime.onInstalled.addListener(async () => {
+runtime.onInstalled.addListener(() => {
   refreshCommands();
   commands.onCommand.addListener(runCommand);
 });
 
-runtime.onConnect.addListener(async (port) => {
+runtime.onConnect.addListener((port) => {
   refreshCommands();
   port.postMessage(memory.commands);
   port.onMessage.addListener(runCommand);
