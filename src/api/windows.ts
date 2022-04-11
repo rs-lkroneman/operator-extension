@@ -21,11 +21,9 @@ const windows = {
     return callbackToPromise(chrome.windows.update, ...args);
   },
 
-  getAll(...args) {
-    return callbackToPromise<ChromeWindow[]>(chrome.windows.update, ...args);
-  }
-}
+  getAll() {
+    return chrome.windows.getAll();
+  },
+};
 
-export {
-  windows as default
-}
+export { windows as default };
