@@ -21,7 +21,7 @@ export default async function consolidateTabsFromWindows() {
     return;
   }
 
-  await chromeTabs.moveTabs(flattenedTabsIds, {
+  await chromeTabs.move(flattenedTabsIds as number[], {
     windowId: currentWindow.id,
     index: -1,
   });
