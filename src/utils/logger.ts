@@ -1,8 +1,9 @@
+const DEBUG = "DEBUG";
 const ERROR = "ERROR";
 const WARN = "WARN";
 const INFO = "INFO";
 
-const CURRENT_LOG_LEVEL = INFO;
+const CURRENT_LOG_LEVEL = ERROR;
 const LOG_LEVELS = [ERROR, WARN, INFO];
 
 const isLogLevelEnabled = (logLevel) => {
@@ -10,6 +11,13 @@ const isLogLevelEnabled = (logLevel) => {
 };
 
 const logger = {
+  debug(...args) {
+    if (!isLogLevelEnabled(DEBUG)) {
+      return;
+    }
+
+    console.log(...args);
+  },
   info(...args) {
     if (!isLogLevelEnabled(INFO)) {
       return;

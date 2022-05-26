@@ -13,14 +13,21 @@ import logger from "src/utils/logger";
 
 interface CommandSearchAction {
   type: string;
-  payload?: string[] | string | undefined;
+  payload?: string[] | string | undefined | CommandOption[];
 }
 
-interface CommandSearchState {
+export type CommandOption = {
+  description: string;
+  name: string;
+  shortcut: string;
+  id: string;
+};
+
+export interface CommandSearchState {
   searchTerm: string;
   selectedCommand: number | null;
-  commands: string[];
-  filteredCommands: string[];
+  commands: CommandOption[];
+  filteredCommands: CommandOption[];
 }
 
 export const initialState: CommandSearchState = {
@@ -38,14 +45,14 @@ function selectCommand(commands, atIndex = 0) {
   return Math.max(Math.min(atIndex, commands.length - 1), 0);
 }
 
-function filterCommands(commands, searchTerm = "") {
+function filterCommands(commands: CommandOption[], searchTerm = "") {
   const isEmptySearch = searchTerm === "";
   if (isEmptySearch) {
     return commands;
   }
 
   return commands.filter((command) =>
-    command.toLowerCase().includes(searchTerm.toLowerCase())
+    command.id.toLowerCase().includes(searchTerm.toLowerCase())
   );
 }
 
@@ -62,10 +69,11 @@ function commandReducer(
         return state;
       }
 
+      const payloadAsCommands = action.payload as CommandOption[];
       return {
         ...state,
-        commands: [...action.payload],
-        filteredCommands: filterCommands(action.payload, state.searchTerm),
+        commands: [...payloadAsCommands],
+        filteredCommands: filterCommands(payloadAsCommands, state.searchTerm),
       };
     case COMMANDS_FILTER:
       logger.info(COMMANDS_FILTER);
@@ -111,19 +119,39 @@ function commandReducer(
       logger.info(commandToExecute);
 
       if (commandToExecute) {
-        backgroundClient.sendMessage(commandToExecute);
+        backgroundClient.sendMessage(commandToExecute?.id);
       }
       return state;
     case COMMANDS_EXECUTE_OPTION:
       const command = action.payload as string;
+      logger.debug(COMMANDS_EXECUTE_OPTION);
+      logger.debug(command);
       if (command == null) {
         return state;
       }
 
-      if (state.commands.includes(command)) {
+      const indexOfFilteredCommand = state.filteredCommands.findIndex(
+        (item) => item.id === command
+      );
+      const indexOfCommand = state.commands.findIndex(
+        (item) => item.id === command
+      );
+
+      if (indexOfCommand !== -1) {
         backgroundClient.sendMessage(command);
       }
-      return state;
+
+      const isExecutedCommandSelected =
+        state.selectedCommand === indexOfFilteredCommand;
+
+      if (isExecutedCommandSelected) {
+        return state;
+      }
+
+      return {
+        ...state,
+        selectedCommand: indexOfFilteredCommand,
+      };
     default:
       return state;
   }
