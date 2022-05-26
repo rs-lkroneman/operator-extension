@@ -5,6 +5,7 @@ import useCommandReducer from "src/store/useCommandReducer";
 
 import { COMMANDS_UPDATE } from "src/constants";
 import logger from "src/utils/logger";
+import { CommandSearchState } from "src/store/commandReducer";
 
 const store = createContext({});
 const { Provider } = store;
@@ -13,7 +14,7 @@ type StateProviderProps = {} & React.ComponentProps<"div">;
 
 export const StateProvider = (props: StateProviderProps) => {
   const { children } = props;
-  const [state, dispatch] = useCommandReducer();
+  const [state, dispatch] = useCommandReducer<CommandSearchState>();
 
   backgroundClient.addListener((payload) => {
     const backgroundPayload = {

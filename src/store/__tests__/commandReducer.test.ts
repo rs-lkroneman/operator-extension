@@ -11,6 +11,13 @@ import {
 
 jest.mock("src/background/client");
 
+const createCommand = (id) => ({
+  description: "",
+  name: "",
+  shortcut: "",
+  id: id,
+});
+
 describe("commandReducer", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -33,19 +40,34 @@ describe("commandReducer", () => {
     it("gets set by an action to update commands", () => {
       const result = commandReducer(undefined, {
         type: COMMANDS_UPDATE,
-        payload: ["one", "two", "three"],
+        payload: [
+          createCommand("one"),
+          createCommand("two"),
+          createCommand("three"),
+        ],
       });
 
       expect(result).toEqual(
         expect.objectContaining({
-          commands: ["one", "two", "three"],
+          commands: [
+            createCommand("one"),
+            createCommand("two"),
+            createCommand("three"),
+          ],
         })
       );
     });
 
     it("does not update state when the update commands action has no payload", () => {
       const result = commandReducer(
-        { ...initialState, commands: ["one", "two", "three"] },
+        {
+          ...initialState,
+          commands: [
+            createCommand("one"),
+            createCommand("two"),
+            createCommand("three"),
+          ],
+        },
         {
           type: COMMANDS_UPDATE,
           payload: undefined,
@@ -54,7 +76,11 @@ describe("commandReducer", () => {
 
       expect(result).toEqual(
         expect.objectContaining({
-          commands: ["one", "two", "three"],
+          commands: [
+            createCommand("one"),
+            createCommand("two"),
+            createCommand("three"),
+          ],
         })
       );
     });
@@ -63,7 +89,14 @@ describe("commandReducer", () => {
   describe("SearchTerm", () => {
     it("Filters commands when not undefined", () => {
       const result = commandReducer(
-        { ...initialState, commands: ["close other", "open new", "move left"] },
+        {
+          ...initialState,
+          commands: [
+            createCommand("close other"),
+            createCommand("open new"),
+            createCommand("move left"),
+          ],
+        },
         {
           type: COMMANDS_FILTER,
           payload: "left",
@@ -73,14 +106,21 @@ describe("commandReducer", () => {
       expect(result).toEqual(
         expect.objectContaining({
           searchTerm: "left",
-          filteredCommands: ["move left"],
+          filteredCommands: [createCommand("move left")],
         })
       );
     });
 
     it("Lowercases the search term when filtering", () => {
       const result = commandReducer(
-        { ...initialState, commands: ["close other", "open new", "move left"] },
+        {
+          ...initialState,
+          commands: [
+            createCommand("close other"),
+            createCommand("open new"),
+            createCommand("move left"),
+          ],
+        },
         {
           type: COMMANDS_FILTER,
           payload: "leFT",
@@ -90,14 +130,21 @@ describe("commandReducer", () => {
       expect(result).toEqual(
         expect.objectContaining({
           searchTerm: "leFT",
-          filteredCommands: ["move left"],
+          filteredCommands: [createCommand("move left")],
         })
       );
     });
 
     it("Lowercases the command when filtering", () => {
       const result = commandReducer(
-        { ...initialState, commands: ["close other", "open new", "move LEFT"] },
+        {
+          ...initialState,
+          commands: [
+            createCommand("close other"),
+            createCommand("open new"),
+            createCommand("move LEFT"),
+          ],
+        },
         {
           type: COMMANDS_FILTER,
           payload: "leFT",
@@ -107,14 +154,21 @@ describe("commandReducer", () => {
       expect(result).toEqual(
         expect.objectContaining({
           searchTerm: "leFT",
-          filteredCommands: ["move LEFT"],
+          filteredCommands: [createCommand("move LEFT")],
         })
       );
     });
 
     it("Returns the entire list when undefined", () => {
       const result = commandReducer(
-        { ...initialState, commands: ["close other", "open new", "move left"] },
+        {
+          ...initialState,
+          commands: [
+            createCommand("close other"),
+            createCommand("open new"),
+            createCommand("move left"),
+          ],
+        },
         {
           type: COMMANDS_FILTER,
           payload: undefined,
@@ -124,14 +178,25 @@ describe("commandReducer", () => {
       expect(result).toEqual(
         expect.objectContaining({
           searchTerm: undefined,
-          filteredCommands: ["close other", "open new", "move left"],
+          filteredCommands: [
+            createCommand("close other"),
+            createCommand("open new"),
+            createCommand("move left"),
+          ],
         })
       );
     });
 
     it("pre-selects the first option in the list when filtering", () => {
       const result = commandReducer(
-        { ...initialState, commands: ["close other", "open new", "move left"] },
+        {
+          ...initialState,
+          commands: [
+            createCommand("close other"),
+            createCommand("open new"),
+            createCommand("move left"),
+          ],
+        },
         {
           type: COMMANDS_FILTER,
           payload: "left",
@@ -147,7 +212,14 @@ describe("commandReducer", () => {
 
     it("resets the selected item when filteredCommands is empty", () => {
       const result = commandReducer(
-        { ...initialState, commands: ["close other", "open new", "move left"] },
+        {
+          ...initialState,
+          commands: [
+            createCommand("close other"),
+            createCommand("open new"),
+            createCommand("move left"),
+          ],
+        },
         {
           type: COMMANDS_FILTER,
           payload: "not in the list",
@@ -168,7 +240,11 @@ describe("commandReducer", () => {
         const result = commandReducer(
           {
             ...initialState,
-            commands: ["close other", "open new", "move left"],
+            commands: [
+              createCommand("close other"),
+              createCommand("open new"),
+              createCommand("move left"),
+            ],
             selectedCommand: null,
           },
           {
@@ -187,7 +263,11 @@ describe("commandReducer", () => {
         const result = commandReducer(
           {
             ...initialState,
-            commands: ["close other", "open new", "move left"],
+            commands: [
+              createCommand("close other"),
+              createCommand("open new"),
+              createCommand("move left"),
+            ],
             selectedCommand: null,
           },
           {
@@ -209,11 +289,11 @@ describe("commandReducer", () => {
           {
             ...initialState,
             filteredCommands: [
-              "close other",
-              "open new",
-              "move left",
-              "fourth command",
-              "fifth command",
+              createCommand("close other"),
+              createCommand("open new"),
+              createCommand("move left"),
+              createCommand("fourth command"),
+              createCommand("fifth command"),
             ],
             selectedCommand: 1,
           },
@@ -234,11 +314,11 @@ describe("commandReducer", () => {
           {
             ...initialState,
             filteredCommands: [
-              "close other",
-              "open new",
-              "move left",
-              "fourth command",
-              "fifth command",
+              createCommand("close other"),
+              createCommand("open new"),
+              createCommand("move left"),
+              createCommand("fourth command"),
+              createCommand("fifth command"),
             ],
             selectedCommand: 1,
           },
@@ -259,11 +339,11 @@ describe("commandReducer", () => {
           {
             ...initialState,
             commands: [
-              "close other",
-              "open new",
-              "move left",
-              "fourth command",
-              "fifth command",
+              createCommand("close other"),
+              createCommand("open new"),
+              createCommand("move left"),
+              createCommand("fourth command"),
+              createCommand("fifth command"),
             ],
             selectedCommand: 1,
           },
@@ -288,11 +368,11 @@ describe("commandReducer", () => {
         {
           ...initialState,
           commands: [
-            "close other",
-            "open new",
-            "move left",
-            "fourth command",
-            "fifth command",
+            createCommand("close other"),
+            createCommand("open new"),
+            createCommand("move left"),
+            createCommand("fourth command"),
+            createCommand("fifth command"),
           ],
           selectedCommand: null,
         },
@@ -309,11 +389,11 @@ describe("commandReducer", () => {
         {
           ...initialState,
           filteredCommands: [
-            "close other",
-            "open new",
-            "move left",
-            "fourth command",
-            "fifth command",
+            createCommand("close other"),
+            createCommand("open new"),
+            createCommand("move left"),
+            createCommand("fourth command"),
+            createCommand("fifth command"),
           ],
           selectedCommand: 6,
         },
@@ -330,11 +410,11 @@ describe("commandReducer", () => {
         {
           ...initialState,
           filteredCommands: [
-            "close other",
-            "open new",
-            "move left",
-            "fourth command",
-            "fifth command",
+            createCommand("close other"),
+            createCommand("open new"),
+            createCommand("move left"),
+            createCommand("fourth command"),
+            createCommand("fifth command"),
           ],
           selectedCommand: 3,
         },
@@ -354,7 +434,11 @@ describe("commandReducer", () => {
       commandReducer(
         {
           ...initialState,
-          commands: ["close other", "open new", "move left"],
+          commands: [
+            createCommand("close other"),
+            createCommand("open new"),
+            createCommand("move left"),
+          ],
         },
         {
           type: COMMANDS_EXECUTE_OPTION,
@@ -369,7 +453,11 @@ describe("commandReducer", () => {
       commandReducer(
         {
           ...initialState,
-          commands: ["close other", "open new", "move left"],
+          commands: [
+            createCommand("close other"),
+            createCommand("open new"),
+            createCommand("move left"),
+          ],
         },
         {
           type: COMMANDS_EXECUTE_OPTION,
@@ -384,7 +472,11 @@ describe("commandReducer", () => {
       commandReducer(
         {
           ...initialState,
-          commands: ["close other", "open new", "move left"],
+          commands: [
+            createCommand("close other"),
+            createCommand("open new"),
+            createCommand("move left"),
+          ],
         },
         {
           type: COMMANDS_EXECUTE_OPTION,

@@ -14,10 +14,28 @@ $search-selected-text: #fff !default;
     &-item {
         padding: 10px 20px;
         cursor: pointer;
+        border: 1px solid transparent;
+        user-select: none;
+        transition: border-color 200ms ease-in-out;
+        display: flex;
+        justify-content: space-between;
 
         &.is-selected {
             background: $search-selected-background;
             color: $search-selected-text;
         }
+
+        &:hover:not(.is-selected) {
+            border: 1px solid $search-input-text;
+        }
+    }
+
+    &-text {
+        color: inherit;
+    }
+
+    &-shortcut {
+        color: inherit;
+        opacity: .7;
     }
 }

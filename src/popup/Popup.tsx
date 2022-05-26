@@ -9,10 +9,11 @@ import SearchInput from "../components/SearchInput";
 import SuggestionList from "../components/SuggestionList";
 import logger from "src/utils/logger";
 import backgroundClient from "src/background/client";
+import { CommandSearchState } from "src/store/commandReducer";
 
 function Popup() {
   const { state, dispatch } = useContext(Store);
-  const { filteredCommands, selectedCommand } = state;
+  const { filteredCommands, selectedCommand } = state as CommandSearchState;
   const selectRef = React.createRef();
 
   const handleKeyPress = (e) => {
@@ -65,7 +66,9 @@ function Popup() {
     logger.info(selectRef.current.value);
   }, [state.searchTerm, selectRef]);
 
-  const selectedValue = filteredCommands[selectedCommand] || "";
+  const selectedCommandOption =
+    selectedCommand !== null ? filteredCommands[selectedCommand] : null;
+  const selectedValue = selectedCommandOption?.id || "";
   return (
     <div className="Popup">
       <SearchInput type="text" onKeyDown={handleKeyPress} />
@@ -82,9 +85,9 @@ function Popup() {
           onChange={() => {}}
         >
           {filteredCommands !== null &&
-            filteredCommands.map((command) => (
-              <option value={command} key={command}>
-                {command}
+            filteredCommands.map((command, index) => (
+              <option value={command.id} key={command.id}>
+                {command.id}
               </option>
             ))}
         </select>
