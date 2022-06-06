@@ -1,6 +1,8 @@
-# Chrome Util Extension
+# Operator
 
-Inspired by Alfred, Cmd+Shift+P (Vscode, Chrome Devtools), Cmd+Shift+A (Intellij)
+Your productivity assistant
+
+## Getting Started
 
 1. Install the Extension to Chrome or Edge
 
@@ -8,7 +10,14 @@ Inspired by Alfred, Cmd+Shift+P (Vscode, Chrome Devtools), Cmd+Shift+A (Intellij
 
 3. Search and execute a command
 
-## Supported Commands
+## Default Shortcuts (MacOS)
+
+- `Ctrl+Space` - open runner dialogue
+- `Cmd+Shift+X` - pin/unpin current tab
+- `Ctrl+Shift+Left` - move tab left
+- `Ctrl+Shift+Left` - move tab right
+
+## Commands
 
 - `pin unpin tab`
 - `unpin all tabs`
@@ -25,13 +34,6 @@ Inspired by Alfred, Cmd+Shift+P (Vscode, Chrome Devtools), Cmd+Shift+A (Intellij
 - `open extension shortcuts manager`
 
 [Command configuration in code](./src/commands/commands.ts)
-
-## Default Shortcuts (MacOS)
-
-- `Ctrl+Space` - open runner dialogue
-- `Cmd+Shift+X` - pin/unpin current tab
-- `Ctrl+Shift+Left` - move tab left
-- `Ctrl+Shift+Left` - move tab right
 
 To find the shortcuts for your platform see the `"commands"` in [Shortcut configuration in code](./config/manifest.json)
 
