@@ -7,7 +7,6 @@
     "default_popup": "popup.html",
     "default_title": "Open the popup"
   },
-  "options_page": "options.html",
   "background": {
     "service_worker": "background.js"
   },
@@ -51,8 +50,6 @@
     "128": "favicon/favicon-192x192.png"
   },
   "permissions": [
-    "tabs",
-    "scripting"
-  ],
-  "host_permissions": ["<all_urls>"]
+    "tabs"
+  ]
 }
