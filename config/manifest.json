@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Chrome Util Runner",
-  "description": "A command runner inspired by Alfred, Cmd+Shift+P (Vscode, Chrome Devtools), Cmd+Shift+A (Intellij)",
+  "name": "Operator",
+  "description": "Your productivity assistant",
   "version": "1.3",
   "action": {
     "default_popup": "popup.html",
@@ -46,9 +46,9 @@
     }
   },
   "icons": {
-    "16": "favicon.ico",
-    "48": "favicon.ico",
-    "128": "favicon.ico"
+    "16": "favicon/favicon.ico",
+    "32": "favicon/favicon-32x32.png",
+    "128": "favicon/favicon-192x192.png"
   },
   "permissions": [
     "tabs",
