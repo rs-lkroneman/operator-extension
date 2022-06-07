@@ -2,6 +2,8 @@
 
 Your productivity assistant
 
+https://chrome.google.com/webstore/detail/operator/jdmngaaglkkhkfegaopojolefpnikcpg
+
 ## Getting Started
 
 1. Install the Extension to Chrome or Edge
