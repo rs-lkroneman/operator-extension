@@ -1,14 +1,16 @@
 # Operator
 
-Your productivity assistant
+Keyboard driven workflows for managing tabs.
 
-https://chrome.google.com/webstore/detail/operator/jdmngaaglkkhkfegaopojolefpnikcpg
+![Small Promo Tile](docs/design/Promo-Tile-Small.jpg)
+
+[Download From Chrome Webstore](https://chrome.google.com/webstore/detail/operator/jdmngaaglkkhkfegaopojolefpnikcpg)
 
 ## Getting Started
 
 1. Install the Extension to Chrome or Edge
 
-2. Open the Extension, by using the hotkey (control + space) or clicking the icon
+2. Open the Extension, by using the hotkey (control + space) or clicking extension icon in the top right corner
 
 3. Search and execute a command
 
@@ -39,14 +41,16 @@ https://chrome.google.com/webstore/detail/operator/jdmngaaglkkhkfegaopojolefpnik
 
 To find the shortcuts for your platform see the `"commands"` in [Shortcut configuration in code](./config/manifest.json)
 
-To modify these shortcuts:
+## Shortcut Configuration
 
-- open the runner and search for `open extension shortcuts`
-- or navigate to `chrome://extensions/shortcuts`
+If you have the extension installed.
 
-You can also assign shortcuts to any commands defined in [./shortcutConfig.ts](./shortcutConfig.ts)
+1. From chrome, `Ctrl+Space` to open extension
+2. Search `shortcuts`
+3. Press Enter or click on option
+4. A native browser page will show up where shortcuts can be managed.
 
-[But no more than 4 preset shortcuts and be set from the extension itself](https://newbedev.com/google-chrome-maximum-of-4-chrome-commands-allowed)
+Note: The extension can only preset 4 shortcuts, but more can be configured by the end-user [Read More](https://newbedev.com/google-chrome-maximum-of-4-chrome-commands-allowed)
 
 ## Contributing
 
