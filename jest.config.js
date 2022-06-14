@@ -2,12 +2,6 @@ module.exports = {
   preset: "ts-jest",
   testEnvironment: "jsdom",
   setupFilesAfterEnv: ["<rootDir>/test_utils/setup.ts"],
-  // globals: {
-  //   "ts-jest": {
-  //     // ts-jest configuration goes here
-  //     tsconfig: "<rootDir>/tsconfig.json",
-  //   },
-  // },
   collectCoverageFrom: [
     "src/**/*.{js,jsx,ts,tsx}",
     "!**/node_modules/**",
