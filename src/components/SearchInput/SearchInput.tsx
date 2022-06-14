@@ -10,7 +10,14 @@ const SearchInput = (props) => {
     }
   });
 
-  return <input {...props} className="SearchInput" ref={ref} />;
+  return (
+    <input
+      {...props}
+      className="SearchInput"
+      data-testid="search_input"
+      ref={ref}
+    />
+  );
 };
 
 export default SearchInput;

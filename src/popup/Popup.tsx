@@ -69,6 +69,9 @@ function Popup() {
   const selectedCommandOption =
     selectedCommand !== null ? filteredCommands[selectedCommand] : null;
   const selectedValue = selectedCommandOption?.id || "";
+  // an onchange is necessary to keep the selet option from being set as read-only
+  const onNativeOnChange = () => {};
+
   return (
     <div className="Popup">
       <SearchInput type="text" onKeyDown={handleKeyPress} />
@@ -82,7 +85,7 @@ function Popup() {
           className="Popup__Select"
           ref={selectRef}
           value={selectedValue}
-          onChange={() => {}}
+          onChange={onNativeOnChange}
         >
           {filteredCommands !== null &&
             filteredCommands.map((command, index) => (
