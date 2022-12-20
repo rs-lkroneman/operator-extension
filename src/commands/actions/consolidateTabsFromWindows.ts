@@ -9,20 +9,26 @@ export default async function consolidateTabsFromWindows() {
   const tabsFromOtherWindows = await Promise.all(
     filteredWindows.map((win) => chromeTabs.query({ windowId: win.id }))
   );
+  const hasId = (item) => Boolean(item?.id);
   const flattenedTabs = tabsFromOtherWindows
     .filter(Boolean)
-    .reduce((result, current) => [...result, ...current], []);
-  const isNotEmpty = (item) => Boolean(item) || item !== null;
-  const flattenedTabsIds = flattenedTabs
-    .map((tab) => tab.id)
-    .filter(isNotEmpty);
+    .reduce((result, current) => [...result, ...current], [])
+    .filter(hasId);
 
   if (flattenedTabs.length < 1) {
     return;
   }
 
-  await chromeTabs.move(flattenedTabsIds as number[], {
-    windowId: currentWindow.id,
-    index: -1,
-  });
+  for (const tab of flattenedTabs) {
+    if (tab.id) {
+      const movedTab = await chromeTabs.move(tab.id, {
+        windowId: currentWindow.id,
+        index: -1,
+      });
+
+      await chromeTabs.update(movedTab.id, {
+        pinned: tab.pinned,
+      });
+    }
+  }
 }
